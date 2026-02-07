@@ -35,7 +35,7 @@ GRID_COLOR = (60, 60, 60)
 # LOAD PLAYER IMAGE
 # -----------------
 
-jordrotte_img = pygame.image.load("jordrotte.png").convert_alpha()
+jordrotte_img = pygame.image.load("assets/Jordrotte.png").convert_alpha()
 jordrotte_img = pygame.transform.scale(jordrotte_img, (CELL_SIZE, CELL_SIZE))
 
 # ------------------

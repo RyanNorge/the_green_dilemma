@@ -1,6 +1,8 @@
 import pygame
 import random
 
+import node
+
 x = 30
 y = 30
 
@@ -27,7 +29,7 @@ def draw(screen: pygame.Surface, grid):
             (
                 screen.blit(
                     # ALIVE_SPRITE if cell else DEAD_SPRITE, (this_y * 10, this_x * 10)
-                    ALIVE_SPRITE if cell else DEAD_SPRITE,
+                    ALIVE_SPRITE if cell.isAlive else DEAD_SPRITE,
                     (
                         DEAD_SPRITE.get_height() * this_y,
                         DEAD_SPRITE.get_width() * this_x,

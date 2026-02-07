@@ -4,12 +4,10 @@ import time
 
 
 import temp_rutenett
+import node as Node
 
 
 def run():
-
-    # Create game objects
-    # ...
 
     # Initialize pygame
     pygame.init()
@@ -19,8 +17,9 @@ def run():
     HEIGHT = 600
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Conway's Game of Death")
-    grid = temp_rutenett.build_grid(WIDTH, HEIGHT, 30)
-    # print(grid)
+
+    # Create game objects
+    grid = Node.build_grid(30, 30)
 
     # Clock to control framerate
     clock = pygame.time.Clock()
@@ -44,7 +43,17 @@ def run():
 
         # update world every 1 sec
         if time.time() > last_update + 1:
-            grid = temp_rutenett.build_grid(WIDTH, HEIGHT, 30)
+            # if False:
+            # grid = Node.build_grid(30, 30)
+
+            # update nodes
+            for row in grid:
+                for node in row:
+                    node.checkNextUpdate()
+            for row in grid:
+                for node in row:
+                    node.updateStatus()
+
             last_update = time.time()
 
         # Handle events
@@ -68,6 +77,7 @@ def run():
 
         # Update display
         temp_rutenett.draw(screen, grid)
+
         pygame.display.flip()
 
     # Clean up
