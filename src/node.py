@@ -16,6 +16,43 @@ class Node:
     def changeAliveStatus(self, alive):
         self.isAlive=alive
 
+    def checkNextUpdate(self):
+        aliveNeighbors=0
+        if self.top and self.top.isAlive:
+            aliveNeighbors+=1
+        if self.bottom and self.bottom.isAlive:
+            aliveNeighbors+=1
+        if self.left and self.left.isAlive:
+            aliveNeighbors+=1
+        if self.right and self.right.isAlive:
+            aliveNeighbors+=1
+        if self.top_left and self.top_left.isAlive:
+            aliveNeighbors+=1
+        if self.top_right and self.top_right.isAlive:
+            aliveNeighbors+=1
+        if self.bottom_left and self.bottom_left.isAlive:
+            aliveNeighbors+=1
+        if self.bottom_right and self.bottom_right.isAlive:
+            aliveNeighbors+=1
+
+        if self.isAlive:
+            if aliveNeighbors==2 or aliveNeighbors==3:
+                self.nextAlive=True
+            else:
+                self.nextAlive=False
+
+        else:
+            if aliveNeighbors==3:
+                self.nextAlive=True
+            else:
+                self.nextAlive=False
+        
+    def updateStatus(self):
+        self.isAlive=self.nextAlive
+
+        
+
+        
 
 
 def build_grid(width, height):
