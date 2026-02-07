@@ -2,6 +2,7 @@ class Node:
     def __init__(self, xPos, yPos):
         self.xPos = xPos
         self.yPos = yPos
+        self.nextAlive=False
         self.isAlive = False
         self.top = None
         self.bottom = None
@@ -11,6 +12,9 @@ class Node:
         self.top_right = None
         self.bottom_left = None
         self.bottom_right = None
+
+    def changeAliveStatus(self, alive):
+        self.isAlive=alive
 
 
 
