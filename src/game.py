@@ -2,6 +2,9 @@ import pygame
 import sys
 
 
+import temp_rutenett
+
+
 def run():
 
     # Create game objects
@@ -15,6 +18,8 @@ def run():
     HEIGHT = 600
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Conway's Game of Death")
+    grid = temp_rutenett.build_grid(WIDTH, HEIGHT, 30)
+    # print(grid)
 
     # Clock to control framerate
     clock = pygame.time.Clock()
@@ -55,6 +60,7 @@ def run():
         screen.fill(DARK_GRAY)
 
         # Update display
+        temp_rutenett.draw(screen, grid)
         pygame.display.flip()
 
     # Clean up
