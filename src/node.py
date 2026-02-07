@@ -14,9 +14,15 @@ class Node:
 
 
 
-def build_grid(width, height, alive_factory=lambda x,y: False):
+def build_grid(width, height):
+    
     # Create nodes
-    grid = [[Node(x, y, alive_factory(x,y)) for x in range(width)] for y in range(height)]
+    grid = []
+    for x in range(width):
+        grid.append([])
+        for y in range(height):
+            grid[x].append(Node(x, y))
+
     # Helper to get node or None
     def get(x, y):
         if 0 <= x < width and 0 <= y < height:
