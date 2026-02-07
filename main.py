@@ -18,7 +18,8 @@ while var != 10:
     var += 1
     print("hei")
 
-    # --- Lyd ---
+    # --- Lyd --- test
+    
 # import os 
 #hit_sound_path = os.path.join(os.path.dirname(__file__), "sounds", "hit.wav")
 #hit_sound = pygame.mixer.Sound(hit_sound_path) if os.path.exists(hit_sound_path) else None
