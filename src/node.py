@@ -8,17 +8,29 @@ class Node:
         self.bottomNeighbor
         self.leftNeighbor
         self.rightNeighbor
+        self.leftTopNeighbor
+        self.leftBottomNeighbor
+        self.rightTopNeighbor
+        self.rightBottomNeighbor
 
-    def createRightNeighbor(self, xSize, ySize):
-        self.rightNeigbor=Node(self.xPos+1, yPos, not Alive)
-        if ySize>0:
-            self.rightNeighbor.createRightNeighbor(xSize, ySize-1)
+    def createRightNeighbor(self, xSize, ySize, leftNeighbor):
+        self.rightNeighbor=Node(self.xPos+1, self.yPos, not self.Alive, self)
+        self.rightNeighbor.leftNeighbor=leftNeighbor
 
-        self.rightNeighbor.createBottomNeighbor(xSize-1)
+        if ySize<=0: #Recursively creates nodes on X axis
+            self.rightNeighbor.createRightNeighbor(xSize-1, ySize)
 
-    def createBottomNeighbor(self, xSize):
-        self.bottomNeighbor=Node(self.xPos, self.yPos-1, not Alive)
-        self.bottomNeighbor.createBottomNeighbor(xSize-1)
+        self.rightNeighbor.createBottomNeighbor(ySize-1, self.leftNeighbor, self.rightNeighbor, self)
+
+
+    def createBottomNeighbor(self, ySize, leftNeighbor, rightNeighbor, topNeighbor):
+        self.bottomNeighbor=Node(self.xPos, self.yPos-1, not self.Alive)
+        self.bottomNeighbor.leftNeighbor=leftNeighbor
+        self.bottomNeighbor.rightNeighbor=rightNeighbor
+        self.bottomNeighbor.topNeighbor=topNeighbor
+
+        if ySize<=0: #Recursively creates nodes on Y axis
+            self.bottomNeighbor.createBottomNeighbor(ySize-1)
 
         
 
