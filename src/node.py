@@ -50,7 +50,6 @@ class Node:
     def updateStatus(self):
         self.isAlive=self.nextAlive
 
-        
 
         
 
@@ -82,3 +81,23 @@ def build_grid(width, height):
             node.bottom_left = get(x - 1, y + 1)
             node.bottom_right = get(x + 1, y + 1)
     return grid
+
+
+#Method for calling checkNextUpdate on all nodes in the grid
+def checkNextUpdateAll(grid):
+    for x in grid:
+        for y in grid[x]:
+            grid[x][y].checkNextUpdate()
+
+
+#Method for calling updateStatus on all nodes in the grid
+def updateStatusAll(grid):
+    for x in grid:
+        for y in grid[x]:
+            grid[x][y].updateStatus()
+
+
+def updateAllNodes(grid):
+    checkNextUpdateAll(grid)
+    updateStatusAll(grid)
+
