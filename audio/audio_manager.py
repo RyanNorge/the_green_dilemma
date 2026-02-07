@@ -1,18 +1,22 @@
 import pygame
+import os
 
 class AudioManager:
     def __init__(self):
-        pygame.mixer.init()
-        self.music_volume = 0.5
+        self.base_path = os.path.join("assets", "music")
+        self.music_volume = 0.4
 
-    def play_music(self, path, loop = True, fade_ms=1000): 
+    def play_background(self):
+        path = os.path.join(self.base_path, "background.mp3")
         pygame.mixer.music.load(path)
-        pygame.mixer.music.set_volume(self.music_volume) 
-        pygame.mixer.music.play(-1 if loop else 0, fade_ms=fade_ms)     
+        pygame.mixer.music.set_volume(self.music_volume)
+        pygame.mixer.music.play(-1, fade_ms=1500)
+
+    def play_combat(self):
+        path = os.path.join(self.base_path, "combat.mp3")
+        pygame.mixer.music.load(path)
+        pygame.mixer.music.set_volume(self.music_volume)
+        pygame.mixer.music.play(-1, fade_ms=500)
 
     def stop_music(self, fade_ms=1000):
         pygame.mixer.music.fadeout(fade_ms)
-
-    def set_music_volume(self, volume):
-        self.music_volume = max(0.0, min(1.0, volume))  # Clamp between 0.0 and 1.0
-        pygame.mixer.music.set_volume(self.music_volume)

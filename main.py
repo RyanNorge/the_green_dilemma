@@ -1,4 +1,14 @@
 import subprocess
+from audio import AudioManager
+
+
+# For audio playback
+pygame.init()
+pygame.mixer.init()
+
+audio = AudioManager()
+audio.play_background()
+
 
 
 def main():
