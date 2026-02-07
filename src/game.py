@@ -1,5 +1,9 @@
 import pygame
 import sys
+import time
+
+
+import temp_rutenett
 
 
 def run():
@@ -15,6 +19,8 @@ def run():
     HEIGHT = 600
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Conway's Game of Death")
+    grid = temp_rutenett.build_grid(WIDTH, HEIGHT, 30)
+    # print(grid)
 
     # Clock to control framerate
     clock = pygame.time.Clock()
@@ -32,8 +38,13 @@ def run():
 
     # Game loop
     running = True
+    last_update = 0
     while running:
         clock.tick(FPS)  # Limit frame rate
+
+        if time.time() > last_update + 1:
+            grid = temp_rutenett.build_grid(WIDTH, HEIGHT, 30)
+            last_update = time.time()
 
         # Handle events
         for event in pygame.event.get():
@@ -55,6 +66,7 @@ def run():
         screen.fill(DARK_GRAY)
 
         # Update display
+        temp_rutenett.draw(screen, grid)
         pygame.display.flip()
 
     # Clean up
