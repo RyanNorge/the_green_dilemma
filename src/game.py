@@ -1,15 +1,11 @@
 import pygame
 import sys
 
-from src.player import Player
-from src.plant import Plant
-
 
 def run():
 
     # Create game objects
-    player = Player()
-    plant = Plant()
+    # ...
 
     # Initialize pygame
     pygame.init()
@@ -18,7 +14,7 @@ def run():
     WIDTH = 800
     HEIGHT = 600
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    pygame.display.set_caption("The Green Dilemma")
+    pygame.display.set_caption("Conway's Game of Death")
 
     # Clock to control framerate
     clock = pygame.time.Clock()
@@ -57,9 +53,6 @@ def run():
 
         # Draw
         screen.fill(DARK_GRAY)
-        player.move(keys)
-        screen.blit(player.sprite, (player.x, player.y))
-        # pygame.draw.rect(screen, BLUE, (x, y, size, size))
 
         # Update display
         pygame.display.flip()
@@ -67,3 +60,7 @@ def run():
     # Clean up
     pygame.quit()
     sys.exit()
+
+
+if __name__ == "__main__":
+    run()
