@@ -1,5 +1,13 @@
+import subprocess
+
+
 def main():
-    print("Hello from the-green-dilemma!")
+
+    # Format code with ruff
+    subprocess.run(["uv", "run", "ruff", "format"])
+
+    # Run the game with environment loaded
+    subprocess.run(["uv", "run", "src/game.py"])
 
 
 if __name__ == "__main__":
