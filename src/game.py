@@ -26,14 +26,11 @@ def run():
     FPS = 60
 
     # Colors
-    WHITE = (255, 255, 255)
     DARK_GRAY = (50, 50, 50)
-    BLUE = (60, 60, 255)
 
     # Game variables
     x, y = 100, 100
     speed = 5
-    size = 50
 
     # Game loop
     running = True
@@ -43,9 +40,6 @@ def run():
 
         # update world every 1 sec
         if time.time() > last_update + 1:
-            # if False:
-            # grid = Node.build_grid(30, 30)
-
             # update nodes
             for row in grid:
                 for node in row:

@@ -1,3 +1,0 @@
-# Asset artist credits.
-# Put links to the assets used here...
-

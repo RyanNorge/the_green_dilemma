@@ -1,7 +1,6 @@
 import pygame
 import random
 
-import node
 
 x = 30
 y = 30
