@@ -19,18 +19,18 @@ while var != 10:
     print("hei")
 
     # --- Lyd --- test
-    
-# import os 
-#hit_sound_path = os.path.join(os.path.dirname(__file__), "sounds", "hit.wav")
-#hit_sound = pygame.mixer.Sound(hit_sound_path) if os.path.exists(hit_sound_path) else None
-#if hit_sound:
+
+# import os
+# hit_sound_path = os.path.join(os.path.dirname(__file__), "sounds", "hit.wav")
+# hit_sound = pygame.mixer.Sound(hit_sound_path) if os.path.exists(hit_sound_path) else None
+# if hit_sound:
 #    hit_sound.set_volume(0.5)
 
-#game_over_sound_path = os.path.join(os.path.dirname(__file__), "sounds", "game_over.wav")
-#game_over_sound = pygame.mixer.Sound(game_over_sound_path) if os.path.exists(game_over_sound_path) else None
-#if game_over_sound:
-    #game_over_sound.set_volume(0.5)
-# running = True 
+# game_over_sound_path = os.path.join(os.path.dirname(__file__), "sounds", "game_over.wav")
+# game_over_sound = pygame.mixer.Sound(game_over_sound_path) if os.path.exists(game_over_sound_path) else None
+# if game_over_sound:
+# game_over_sound.set_volume(0.5)
+# running = True
 
 # Pause skjerm
 #   if game_state == PAUSED:
@@ -38,7 +38,6 @@ while var != 10:
 #       hint_text = font_small.render("Press P to continue", True, THEME["text_color"])
 #       screen.blit(paused_text, (WIDTH // 2 - 120, HEIGHT // 2 - 60))
 #       screen.blit(hint_text, (WIDTH // 2 - 140, HEIGHT // 2 + 10))
-
 
 
 # Restart
@@ -64,19 +63,19 @@ while var != 10:
 #       screen.blit(score_text, (WIDTH // 2 - 100, HEIGHT // 2 + 10))
 #       screen.blit(restart_text, (WIDTH // 2 - 100, HEIGHT // 2 + 40))
 
-#class Obstacle:
+# class Obstacle:
 #    def __init__(self, base_speed):
-        # Velg tilfeldig størrelse på hindringen
+# Velg tilfeldig størrelse på hindringen
 #        self.size = random.choice([30, 40, 50, 60])  # små, medium, store
 #        # Litt variasjon i hastigheten
 #        self.speed = base_speed + random.choice([-1, 0, 1])
-        # Start x-posisjon tilfeldig
+# Start x-posisjon tilfeldig
 #        x = random.randint(0, WIDTH - self.size)
 #        # Lag pygame.Rect for hindringen
 #        self.rect = pygame.Rect(x, -self.size, self.size, self.size)
 
 #    def update(self):
-        # Flytt hindringen nedover
+# Flytt hindringen nedover
 #        self.rect.y += self.speed
 
 #    def draw(self, screen):

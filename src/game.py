@@ -42,6 +42,7 @@ def run():
     while running:
         clock.tick(FPS)  # Limit frame rate
 
+        # update world every 1 sec
         if time.time() > last_update + 1:
             grid = temp_rutenett.build_grid(WIDTH, HEIGHT, 30)
             last_update = time.time()
