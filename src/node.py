@@ -101,3 +101,40 @@ def updateStatusAll(grid):
 def updateAllNodes(grid):
     checkNextUpdateAll(grid)
     updateStatusAll(grid)
+
+
+#finner den nærmeste noden som lever
+def shortestAlive(Graph, start):
+    visited = {start}
+    queue = []
+
+    # Add all 8 neighbors of start to queue
+    for neighbor in [start.top_left, start.left, start.bottom_left, start.bottom,
+                     start.bottom_right, start.right, start.top_right, start.top]:
+        queue.append(neighbor)
+        visited.add(neighbor)
+
+    while queue:
+        n = queue.pop(0)
+        
+        # Check all 8 neighbors
+        for neighbor in [n.top_left, n.left, n.bottom_left, n.bottom,
+                         n.bottom_right, n.right, n.top_right, n.top]:
+            if neighbor is None:
+                continue
+            if neighbor.isAlive:
+                return neighbor
+            if neighbor not in visited:
+                queue.append(neighbor)
+                visited.add(neighbor)
+    
+    return None
+            
+            
+
+
+
+
+
+
+
