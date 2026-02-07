@@ -1,43 +1,38 @@
 class Node:
-    def __init__(self, xPos, yPos, xSize, ySize, Alive):
-        self.xPos=xPos
-        self.yPos=yPos
-        self.xSize=xSize
-        self.ySize=ySize
-        self.isAlive=Alive
-
-        self.topNeighbor
-        self.bottomNeighbor
-        self.leftNeighbor
-        self.rightNeighbor
-        self.leftTopNeighbor
-        self.leftBottomNeighbor
-        self.rightTopNeighbor
-        self.rightBottomNeighbor
-
-    def createRightNeighbor(self,leftNeighbor):
-        self.rightNeighbor=Node(self.xPos+1, self.yPos, self.xSize, self.ySize, not self.Alive)
-        self.rightNeighbor.leftNeighbor=leftNeighbor
-
-        if self.xSize-self.xPos<=0: #Recursively creates nodes on X axis
-            self.rightNeighbor.createRightNeighbor(self)
-
-        self.rightNeighbor.createBottomNeighbor(self.leftNeighbor, self.rightNeighbor, self)
-
-
-    def createBottomNeighbor(self, leftNeighbor, rightNeighbor, topNeighbor):
-        self.bottomNeighbor=Node(self.xPos, self.yPos-1, not self.Alive)
-
-        self.bottomNeighbor.leftNeighbor=leftNeighbor
-        self.bottomNeighbor.rightNeighbor=rightNeighbor
-        self.bottomNeighbor.topNeighbor=topNeighbor
-
-        if self.ySize-self.yPos <=0: #Recursively creates nodes on Y axis
-            self.bottomNeighbor.createBottomNeighbor(self.leftNieghbor.bottomNeighbor, self.rightNeighbor.bottomNeighbor, self)
-
-        
+    def __init__(self, xPos, yPos, alive):
+        self.xPos = xPos
+        self.yPos = yPos
+        self.isAlive = alive
+        self.top = None
+        self.bottom = None
+        self.left = None
+        self.right = None
+        self.top_left = None
+        self.top_right = None
+        self.bottom_left = None
+        self.bottom_right = None
 
 
 
-    
+def build_grid(width, height, alive_factory=lambda x,y: False):
+    # Create nodes
+    grid = [[Node(x, y, alive_factory(x,y)) for x in range(width)] for y in range(height)]
+    # Helper to get node or None
+    def get(x, y):
+        if 0 <= x < width and 0 <= y < height:
+            return grid[y][x]
+        return None
+    # Link neighbors
+    for y in range(height):
+        for x in range(width):
+            n = grid[y][x]
+            n.top = get(x, y-1)
+            n.bottom = get(x, y+1)
+            n.left = get(x-1, y)
+            n.right = get(x+1, y)
+            n.top_left = get(x-1, y-1)
+            n.top_right = get(x+1, y-1)
+            n.bottom_left = get(x-1, y+1)
+            n.bottom_right = get(x+1, y+1)
+    return grid
 
