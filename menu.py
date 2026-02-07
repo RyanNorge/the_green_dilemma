@@ -21,6 +21,7 @@ CELL_COLOR = (0, 200, 0, 100)
 # Font
 base_font_size = 40
 
+
 # Knappklasse med vekst
 class Button:
     def __init__(self, text, x, y, w, h, color, hover_color):
@@ -52,18 +53,27 @@ class Button:
         # Skaler knapp
         scaled_w = int(self.w * self.scale)
         scaled_h = int(self.h * self.scale)
-        scaled_x = self.x + (self.w - scaled_w)//2
-        scaled_y = self.y + (self.h - scaled_h)//2
+        scaled_x = self.x + (self.w - scaled_w) // 2
+        scaled_y = self.y + (self.h - scaled_h) // 2
 
-        pygame.draw.rect(screen, self.hover_color if self.scale > 1.05 else self.color,
-                         (scaled_x, scaled_y, scaled_w, scaled_h), border_radius=10)
+        pygame.draw.rect(
+            screen,
+            self.hover_color if self.scale > 1.05 else self.color,
+            (scaled_x, scaled_y, scaled_w, scaled_h),
+            border_radius=10,
+        )
 
         # Tekst
-        text_surf = pygame.font.SysFont(None, int(base_font_size * self.scale)).render(self.text, True, BLACK)
-        text_rect = text_surf.get_rect(center=(scaled_x + scaled_w//2, scaled_y + scaled_h//2))
+        text_surf = pygame.font.SysFont(None, int(base_font_size * self.scale)).render(
+            self.text, True, BLACK
+        )
+        text_rect = text_surf.get_rect(
+            center=(scaled_x + scaled_w // 2, scaled_y + scaled_h // 2)
+        )
         screen.blit(text_surf, text_rect)
 
         return False
+
 
 # Celleklasse for bakgrunn
 class Cell:
@@ -82,6 +92,7 @@ class Cell:
 
     def draw(self, surface):
         pygame.draw.circle(surface, GREEN, (int(self.x), int(self.y)), int(self.size))
+
 
 def main_menu():
     start_button = Button("Start Game", 200, 150, 200, 60, LIGHT_GREEN, DARK_GREEN)
@@ -103,7 +114,7 @@ def main_menu():
         # Tittel
         title_font = pygame.font.SysFont(None, 60)
         title_surf = title_font.render("Game of Life", True, GREEN)
-        title_rect = title_surf.get_rect(center=(WIDTH//2, 80))
+        title_rect = title_surf.get_rect(center=(WIDTH // 2, 80))
         screen.blit(title_surf, title_rect)
 
         # Tegn knapper
@@ -121,6 +132,7 @@ def main_menu():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
 
 if __name__ == "__main__":
     main_menu()

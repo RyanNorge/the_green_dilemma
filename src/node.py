@@ -13,7 +13,6 @@ class Node:
         self.bottom_right = None
 
 
-
 def build_grid(width, height):
 
     # Create nodes
@@ -23,24 +22,22 @@ def build_grid(width, height):
         for y in range(height):
             grid[x].append(Node(x, y))
 
-    #Helper to get node or None
+    # Helper to get node or None
     def get(x, y):
         if 0 <= x < width and 0 <= y < height:
             return grid[y][x]
         return None
-    
 
-    #Link neighbors
+    # Link neighbors
     for y in range(height):
         for x in range(width):
             node = grid[y][x]
-            node.top = get(x, y-1)
-            node.bottom = get(x, y+1)
-            node.left = get(x-1, y)
-            node.right = get(x+1, y)
-            node.top_left = get(x-1, y-1)
-            node.top_right = get(x+1, y-1)
-            node.bottom_left = get(x-1, y+1)
-            node.bottom_right = get(x+1, y+1)
+            node.top = get(x, y - 1)
+            node.bottom = get(x, y + 1)
+            node.left = get(x - 1, y)
+            node.right = get(x + 1, y)
+            node.top_left = get(x - 1, y - 1)
+            node.top_right = get(x + 1, y - 1)
+            node.bottom_left = get(x - 1, y + 1)
+            node.bottom_right = get(x + 1, y + 1)
     return grid
-

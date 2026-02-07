@@ -7,8 +7,8 @@ y = 30
 ALVIE = (255, 255, 255)
 DEAD = (0, 0, 0)
 
-ALIVE_SPRITE = pygame.image.load("assets/alive.png")
-DEAD_SPRITE = pygame.image.load("assets/dead.png")
+ALIVE_SPRITE = pygame.image.load("assets/GrassTile.png")
+DEAD_SPRITE = pygame.image.load("assets/DirtTile.png")
 
 
 def build_grid(width, height, cell_size):

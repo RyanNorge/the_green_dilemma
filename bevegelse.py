@@ -42,6 +42,7 @@ jordrotte_img = pygame.transform.scale(jordrotte_img, (CELL_SIZE, CELL_SIZE))
 # CHARACTER CLASS
 # ------------------
 
+
 class Character:
     def __init__(self, x, y, image):
         self.x = x
@@ -59,15 +60,17 @@ class Character:
     def draw(self, surface):
         surface.blit(
             self.image,
-        (
-            OFFSET_X + self.x * CELL_SIZE,
-            OFFSET_Y + self.y * CELL_SIZE,
-        ),
-    )
+            (
+                OFFSET_X + self.x * CELL_SIZE,
+                OFFSET_Y + self.y * CELL_SIZE,
+            ),
+        )
+
 
 # ------------------
 # DRAW GRID
 # ------------------
+
 
 def draw_grid(surface):
     for x in range(GRID_SIZE):
@@ -79,6 +82,7 @@ def draw_grid(surface):
                 CELL_SIZE,
             )
             pygame.draw.rect(surface, GRID_COLOR, rect, 1)
+
 
 # ------------------
 # MAIN LOOP
