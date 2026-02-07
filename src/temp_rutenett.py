@@ -7,6 +7,9 @@ y = 30
 ALVIE = (255, 255, 255)
 DEAD = (0, 0, 0)
 
+ALIVE_SPRITE = pygame.image.load("assets/alive.png")
+DEAD_SPRITE = pygame.image.load("assets/dead.png")
+
 
 def build_grid(width, height, cell_size):
     grid = []
@@ -18,12 +21,16 @@ def build_grid(width, height, cell_size):
     return grid
 
 
-def draw(screen, grid):
+def draw(screen: pygame.Surface, grid):
     for this_x, row in enumerate(grid):
         for this_y, cell in enumerate(row):
-            pygame.draw.rect(
-                screen,
-                ALVIE if cell else DEAD,
-                pygame.Rect(this_y * 10, this_x * 10, 10, 10),
-                width=5,
+            (
+                screen.blit(
+                    # ALIVE_SPRITE if cell else DEAD_SPRITE, (this_y * 10, this_x * 10)
+                    ALIVE_SPRITE if cell else DEAD_SPRITE,
+                    (
+                        DEAD_SPRITE.get_height() * this_y,
+                        DEAD_SPRITE.get_width() * this_x,
+                    ),
+                ),
             )
