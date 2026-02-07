@@ -5,12 +5,17 @@ import time
 
 import temp_rutenett
 import node as Node
+from audio_manager import AudioManager
 
 
 def run():
 
     # Initialize pygame
     pygame.init()
+
+    # Set up audio
+    audio_manager = AudioManager()
+    audio_manager.play_background()
 
     # Set up the window
     WIDTH = 800
