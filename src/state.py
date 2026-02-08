@@ -34,9 +34,11 @@ class State:
         jordrotte_interval = 0.5
         if time.time() > self.last_jordrotte_update + jordrotte_interval:
             self.jordrotte.sprite.next()
-            x = random.choice([-1, 0, 0, 1])
-            y = random.choice([-1, 0, 0, 1])
-            self.jordrotte.move(x, y)
+
+            nextCoordinate = node.findDirection(
+                self.grid.cells, self.jordrotte.x, self.jordrotte.y
+            )
+            self.jordrotte.move(nextCoordinate[0], nextCoordinate[1])
             self.last_jordrotte_update = time.time()
 
         grass_update_interval = 1
