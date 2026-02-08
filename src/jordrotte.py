@@ -3,20 +3,6 @@ import pygame
 import audio_manager
 
 
-GRID_SIZE = 25
-
-# TODO FIX THIS
-SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
-
-CELL_SIZE = min(SCREEN_WIDTH, SCREEN_HEIGHT) // GRID_SIZE
-
-WIDTH = GRID_SIZE * CELL_SIZE
-HEIGHT = GRID_SIZE * CELL_SIZE
-
-OFFSET_X = (SCREEN_WIDTH - WIDTH) // 2
-OFFSET_Y = (SCREEN_HEIGHT - HEIGHT) // 2
-
-
 class Sprite:
     def __init__(self) -> None:
 
@@ -44,32 +30,25 @@ class Sprite:
 
 class Jordrotte:
     def __init__(self, screen: pygame.Surface):
-        self.x = 225
-        self.y = 225
+
+        # starting location
+        self.x = 5
+        self.y = 5
         self.speed = 5
         self.screen = screen
         self.sprite = Sprite()
 
     def move(self, dx, dy):
-        self.x += dx * 50
-        self.y += dy * 50
+        self.x += dx
+        self.y += dy
         return
 
-        # this would keep the guy in the screen
-        new_x = self.x + dx
-        new_y = self.y + dy
-
-        if 0 <= new_x < GRID_SIZE and 0 <= new_y < GRID_SIZE:
-            self.x = new_x
-            self.y = new_y
-
     def draw(self, screen: pygame.Surface):
-        # self.sprite.next()
         screen.blit(
             self.sprite.get(),
             (
-                self.x,
-                self.y,
+                self.x * 50 - 25,
+                self.y * 50 - 25,
             ),
         )
 

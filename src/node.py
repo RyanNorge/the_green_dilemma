@@ -106,7 +106,7 @@ def updateAllNodes(grid):
 
 
 # finner den nærmeste noden som lever
-def shortestAlive(Graph, start):
+def shortestAlive(Graph, start) -> Node | None:
     visited = {start}
     queue = []
 
@@ -150,24 +150,23 @@ def shortestAlive(Graph, start):
 
 
 # Funksjon for å finne retningen til et koordinat
-#returnerer en liste med koordinater på formen [x,y]
-def findDirection(Graph, start):
+# returnerer en liste med koordinater på formen [x,y]
+def findDirection(Graph, start) -> list[int, int]:
     targetNode = shortestAlive(Graph, start)
     targetX = targetNode.xPos
     targetY = targetNode.yPos
-    startX=start.xPos
-    startY=start.yPos
+    startX = start.xPos
+    startY = start.yPos
 
-    if (abs(targetX-startX)>abs(targetY-startY)):
-        if targetX>startX:
-            return [startX+1, startY]
+    if abs(targetX - startX) > abs(targetY - startY):
+        if targetX > startX:
+            return [startX + 1, startY]
 
         else:
-            return [startX-1, startY]
-    
+            return [startX - 1, startY]
+
     else:
-        if targetY>startY:
-            return [startX, startY+1]
+        if targetY > startY:
+            return [startX, startY + 1]
         else:
-            return [startX, startX-1]
-
+            return [startX, startX - 1]
