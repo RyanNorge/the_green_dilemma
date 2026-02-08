@@ -17,7 +17,7 @@ class Node:
 
         self.nextAlive = False
         self.isAlive = random.choice([True, False])
-        self.fertilized = False
+        self.isFertilized = False
         self.fertilizerCountDown = 0
 
     def changeAliveStatus(self, alive):
@@ -51,22 +51,24 @@ class Node:
                 self.nextAlive = False
 
     def updateStatus(self):
-        if self.nextAlive == False:
-            if self.fertilizerCountDown < 1:
+        if self.nextAlive:
+            self.isAlive = True
+        else:
+            #fertilizer keeps the grass alive
+            if self.isFertilized and self.fertilizerCountDown > 0 and self.isAlive:
+                self.isAlive = True
+                self.fertilizerCountDown -= 1
+                if self.fertilizerCountDown <= 0:
+                    self.isFertilized = False
+                    self.fertilizerCountDown = 0
+            else:
+                self.isAlive = False
                 self.isFertilized = False
                 self.fertilizerCountDown = 0
-                self.isAlive = False
-
-            else:
-                self.fertilizerCountDown -= 1
-
-        else:
-            self.isAlive = True
-
 
     def fertilize(self):
         self.isFertilized = True
-        self.fertilizerCountDown+=5
+        self.fertilizerCountDown = 5
 
 
 def build_grid(width, height):
