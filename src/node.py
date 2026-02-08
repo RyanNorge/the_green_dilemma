@@ -151,23 +151,24 @@ def shortestAlive(Graph, start) -> Node | None:
         n = queue.pop(0)
 
         # Check all 8 neighbors
-        for neighbor in [
-            n.top_left,
-            n.left,
-            n.bottom_left,
-            n.bottom,
-            n.bottom_right,
-            n.right,
-            n.top_right,
-            n.top,
-        ]:
-            if neighbor is None:
-                continue
-            if neighbor.isAlive:
-                return neighbor
-            if neighbor not in visited:
-                queue.append(neighbor)
-                visited.add(neighbor)
+        if neighbor:
+            for neighbor in [
+                n.top_left,
+                n.left,
+                n.bottom_left,
+                n.bottom,
+                n.bottom_right,
+                n.right,
+                n.top_right,
+                n.top,
+            ]:
+                if neighbor is None:
+                    continue
+                if neighbor.isAlive:
+                    return neighbor
+                if neighbor not in visited:
+                    queue.append(neighbor)
+                    visited.add(neighbor)
 
     return None
 
@@ -184,17 +185,13 @@ def findDirection(Graph, startX, startY) -> list[int, int]:
     if abs(targetX - startX) > abs(targetY - startY):
         if targetX > startX:
             return [startX + 1, startY]
-    if abs(targetX - startX) > abs(targetY - startY):
-        if targetX > startX:
-            return [startX + 1, startY]
-
         else:
             return [startX - 1, startY]
 
-    else:
-        if targetY > startY:
-            return [startX, startY + 1]
+    elif abs(targetX - startX) < abs(targetY - startY):
         if targetY > startY:
             return [startX, startY + 1]
         else:
-            return [startX, startX - 1]
+            return [startX, startY - 1]
+
+    return [startX, startY]
