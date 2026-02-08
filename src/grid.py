@@ -12,6 +12,7 @@ class Grid:
     def __init__(self, width, height) -> None:
         self.width = width
         self.height = height
+        self.cell_size = 50
         self.cells = build_grid(width, height)
 
     def get_cell(self, x, y) -> Node:
@@ -22,13 +23,13 @@ class Grid:
         for this_x, row in enumerate(self.cells):
             for this_y, cell in enumerate(row):
                 cell: Node
-                screen.blit(
-                    ALIVE_SPRITE if cell.isAlive else DEAD_SPRITE,
-                    (
-                        DEAD_SPRITE.get_height() * this_y,
-                        DEAD_SPRITE.get_width() * this_x,
-                    ),
+                sprite = ALIVE_SPRITE if cell.isAlive else DEAD_SPRITE
+                # scale sprite to the configured cell size (keep tiles at 50x50)
+                scaled = pygame.transform.scale(
+                    sprite, (self.cell_size, self.cell_size)
                 )
+                # grid is indexed as grid[x][y] where x=column, y=row
+                screen.blit(scaled, (self.cell_size * this_x, self.cell_size * this_y))
 
 
 # just making it obvious that we are using the method from Node here
