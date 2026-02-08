@@ -25,10 +25,19 @@ class Node:
 
     def checkNextUpdate(self):
         aliveNeighbors = 0
-        for neighbor in [self.top, self.bottom, self.top_left, self.top_right,
-                         self.bottom_left, self.bottom_right, self.right, self.right]:
-            if neighbor.isAlive:
-                aliveNeighbors+=1
+        for neighbor in [
+            self.top,
+            self.bottom,
+            self.top_left,
+            self.top_right,
+            self.bottom_left,
+            self.bottom_right,
+            self.right,
+            self.right,
+        ]:
+            if neighbor:
+                if neighbor.isAlive:
+                    aliveNeighbors += 1
 
         if self.isAlive:
             if aliveNeighbors == 2 or aliveNeighbors == 3:
@@ -43,23 +52,21 @@ class Node:
                 self.nextAlive = False
 
     def updateStatus(self):
-        if self.nextAlive==False:
-            if self.fertilizerCountDown<1:
-                self.isFertilized=False
-                self.fertilizerCountDown=0
-                self.isAlive=False
-            
+        if self.nextAlive == False:
+            if self.fertilizerCountDown < 1:
+                self.isFertilized = False
+                self.fertilizerCountDown = 0
+                self.isAlive = False
+
             else:
-                self.fertilizerCountDown-=1
-        
+                self.fertilizerCountDown -= 1
+
         else:
-            self.isAlive=True
-            
+            self.isAlive = True
 
     def fertilize(self):
-        self.isFertilized=True
-        self.fertilizerCountDown=5
-            
+        self.isFertilized = True
+        self.fertilizerCountDown = 5
 
 
 def build_grid(width, height):
