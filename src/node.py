@@ -5,7 +5,7 @@ class Node:
     def __init__(self, xPos, yPos):
         self.xPos = xPos
         self.yPos = yPos
-        
+
         self.top = None
         self.bottom = None
         self.left = None
@@ -17,8 +17,8 @@ class Node:
 
         self.nextAlive = False
         self.isAlive = random.choice([True, False])
-        self.fertilized=False
-        self.fertilizerCountDown=0
+        self.fertilized = False
+        self.fertilizerCountDown = 0
 
     def changeAliveStatus(self, alive):
         self.isAlive = alive
@@ -55,12 +55,11 @@ class Node:
                 self.nextAlive = False
 
     def updateStatus(self):
-        if self.fertilizerCountDown<1:
+        if self.fertilizerCountDown < 1:
             self.isAlive = self.nextAlive
-            self.fertilizerCountDown=0
+            self.fertilizerCountDown = 0
         else:
-            self.fertilizerCountDown-=1
-            
+            self.fertilizerCountDown -= 1
 
 
 def build_grid(width, height):
@@ -159,24 +158,23 @@ def shortestAlive(Graph, start):
 
 
 # Funksjon for å finne retningen til et koordinat
-#returnerer en liste med koordinater på formen [x,y]
+# returnerer en liste med koordinater på formen [x,y]
 def findDirection(Graph, start):
     targetNode = shortestAlive(Graph, start)
     targetX = targetNode.xPos
     targetY = targetNode.yPos
-    startX=start.xPos
-    startY=start.yPos
+    startX = start.xPos
+    startY = start.yPos
 
-    if (abs(targetX-startX)>abs(targetY-startY)):
-        if targetX>startX:
-            return [startX+1, startY]
+    if abs(targetX - startX) > abs(targetY - startY):
+        if targetX > startX:
+            return [startX + 1, startY]
 
         else:
-            return [startX-1, startY]
-    
+            return [startX - 1, startY]
+
     else:
-        if targetY>startY:
-            return [startX, startY+1]
+        if targetY > startY:
+            return [startX, startY + 1]
         else:
-            return [startX, startX-1]
-
+            return [startX, startX - 1]
