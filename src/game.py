@@ -1,3 +1,4 @@
+from email.mime import audio
 import pygame
 import sys
 import time
@@ -38,6 +39,11 @@ def run():
     # Game variables
     x, y = 100, 100
     speed = 5
+    
+    
+    
+    audio = AudioManager()
+    audio.play_background()
 
     # Game loop
     running = True
