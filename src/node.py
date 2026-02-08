@@ -5,8 +5,7 @@ class Node:
     def __init__(self, xPos, yPos):
         self.xPos = xPos
         self.yPos = yPos
-        self.nextAlive = False
-        self.isAlive = random.choice([True, False])
+
         self.top = None
         self.bottom = None
         self.left = None
@@ -16,27 +15,29 @@ class Node:
         self.bottom_left = None
         self.bottom_right = None
 
+        self.nextAlive = False
+        self.isAlive = random.choice([True, False])
+        self.fertilized = False
+        self.fertilizerCountDown = 0
+
     def changeAliveStatus(self, alive):
         self.isAlive = alive
 
     def checkNextUpdate(self):
         aliveNeighbors = 0
-        if self.top and self.top.isAlive:
-            aliveNeighbors += 1
-        if self.bottom and self.bottom.isAlive:
-            aliveNeighbors += 1
-        if self.left and self.left.isAlive:
-            aliveNeighbors += 1
-        if self.right and self.right.isAlive:
-            aliveNeighbors += 1
-        if self.top_left and self.top_left.isAlive:
-            aliveNeighbors += 1
-        if self.top_right and self.top_right.isAlive:
-            aliveNeighbors += 1
-        if self.bottom_left and self.bottom_left.isAlive:
-            aliveNeighbors += 1
-        if self.bottom_right and self.bottom_right.isAlive:
-            aliveNeighbors += 1
+        for neighbor in [
+            self.top,
+            self.bottom,
+            self.top_left,
+            self.top_right,
+            self.bottom_left,
+            self.bottom_right,
+            self.right,
+            self.right,
+        ]:
+            if neighbor:
+                if neighbor.isAlive:
+                    aliveNeighbors += 1
 
         if self.isAlive:
             if aliveNeighbors == 2 or aliveNeighbors == 3:
@@ -51,7 +52,21 @@ class Node:
                 self.nextAlive = False
 
     def updateStatus(self):
-        self.isAlive = self.nextAlive
+        if self.nextAlive == False:
+            if self.fertilizerCountDown < 1:
+                self.isFertilized = False
+                self.fertilizerCountDown = 0
+                self.isAlive = False
+
+            else:
+                self.fertilizerCountDown -= 1
+
+        else:
+            self.isAlive = True
+
+    def fertilize(self):
+        self.isFertilized = True
+        self.fertilizerCountDown = 5
 
 
 def build_grid(width, height):
@@ -86,18 +101,87 @@ def build_grid(width, height):
 
 # Method for calling checkNextUpdate on all nodes in the grid
 def checkNextUpdateAll(grid):
-    for x in grid:
-        for y in grid[x]:
-            grid[x][y].checkNextUpdate()
+    for row in grid:
+        for node in row:
+            node: Node
+            node.checkNextUpdate()
 
 
 # Method for calling updateStatus on all nodes in the grid
 def updateStatusAll(grid):
-    for x in grid:
-        for y in grid[x]:
-            grid[x][y].updateStatus()
+    for row in grid:
+        for node in row:
+            node: Node
+            node.updateStatus()
 
 
 def updateAllNodes(grid):
     checkNextUpdateAll(grid)
     updateStatusAll(grid)
+
+
+# finner den nærmeste noden som lever
+def shortestAlive(Graph, start):
+    visited = {start}
+    queue = []
+
+    # Add all 8 neighbors of start to queue
+    for neighbor in [
+        start.top_left,
+        start.left,
+        start.bottom_left,
+        start.bottom,
+        start.bottom_right,
+        start.right,
+        start.top_right,
+        start.top,
+    ]:
+        queue.append(neighbor)
+        visited.add(neighbor)
+
+    while queue:
+        n = queue.pop(0)
+
+        # Check all 8 neighbors
+        for neighbor in [
+            n.top_left,
+            n.left,
+            n.bottom_left,
+            n.bottom,
+            n.bottom_right,
+            n.right,
+            n.top_right,
+            n.top,
+        ]:
+            if neighbor is None:
+                continue
+            if neighbor.isAlive:
+                return neighbor
+            if neighbor not in visited:
+                queue.append(neighbor)
+                visited.add(neighbor)
+
+    return None
+
+
+# Funksjon for å finne retningen til et koordinat
+# returnerer en liste med koordinater på formen [x,y]
+def findDirection(Graph, start):
+    targetNode = shortestAlive(Graph, start)
+    targetX = targetNode.xPos
+    targetY = targetNode.yPos
+    startX = start.xPos
+    startY = start.yPos
+
+    if abs(targetX - startX) > abs(targetY - startY):
+        if targetX > startX:
+            return [startX + 1, startY]
+
+        else:
+            return [startX - 1, startY]
+
+    else:
+        if targetY > startY:
+            return [startX, startY + 1]
+        else:
+            return [startX, startX - 1]

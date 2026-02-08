@@ -2,6 +2,7 @@ from email.mime import audio
 import pygame
 import sys
 import time
+import random
 
 
 import temp_rutenett
@@ -70,20 +71,16 @@ def run():
 
         # update world
         if time.time() > last_world_update + 1:
-            # update nodes
-            for row in grid:
-                for node in row:
-                    node.checkNextUpdate()
-            for row in grid:
-                for node in row:
-                    node.updateStatus()
+            Node.updateAllNodes(grid)
 
             last_world_update = time.time()
 
         if time.time() > last_screen_update + 0.5:
             # Update jordrotte sprite
             jordrotte.sprite.next()
-            jordrotte.move(1, 0)  # Move right for demonstration
+            x = random.choice([-1, 0, 0, 1])
+            y = random.choice([-1, 0, 0, 1])
+            jordrotte.move(x, y)
 
             # Update display
             screen.fill(DARK_GRAY)

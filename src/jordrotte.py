@@ -44,8 +44,8 @@ class Sprite:
 
 class Jordrotte:
     def __init__(self, screen: pygame.Surface):
-        self.x = 50
-        self.y = 50
+        self.x = 225
+        self.y = 225
         self.speed = 5
         self.screen = screen
         self.sprite = Sprite()
