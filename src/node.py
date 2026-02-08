@@ -54,7 +54,7 @@ class Node:
         if self.nextAlive:
             self.isAlive = True
         else:
-            #fertilizer keeps the grass alive
+            # fertilizer keeps the grass alive
             if self.isFertilized and self.fertilizerCountDown > 0 and self.isAlive:
                 self.isAlive = True
                 self.fertilizerCountDown -= 1

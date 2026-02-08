@@ -37,11 +37,12 @@ class Jordrotte:
         self.speed = 5
         self.screen = screen
         self.sprite = Sprite()
+        self.isTrapped = False
 
     def move(self, x, y):
-        self.x = x
-        self.y = y
-        return
+        if not self.isTrapped:
+            self.x = x
+            self.y = y
 
     def draw(self, screen: pygame.Surface):
         screen.blit(
@@ -54,3 +55,6 @@ class Jordrotte:
 
     def play_eat_grass(self):
         audio_manager.AudioManager.play_eat_grass()
+
+    def trap(self):
+        self.isTrapped = True
