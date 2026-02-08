@@ -3,6 +3,7 @@ import pygame
 import sys
 import time
 import random
+from gameover import GameOver
 
 
 import grid as Grid
@@ -29,7 +30,6 @@ def run():
     running = True
     while running:
         state.next()
-        state.checkEating()
 
         # Handle events
         for event in pygame.event.get():
@@ -46,6 +46,11 @@ def run():
                     tileX = mouseX // state.screen.cell_size
                     tileY = mouseY // state.screen.cell_size
                     print(tileX, tileY)
+
+    # Game over
+
+    time.sleep(2)  # Pause for a moment before quitting
+    GameOver(state.screen, audio_manager)
 
     # Clean up
     pygame.quit()
