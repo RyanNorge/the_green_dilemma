@@ -52,4 +52,4 @@ class State:
         if self.grid.cells[self.jordrotte.x][self.jordrotte.y].isAlive:
             self.grid.cells[self.jordrotte.x][self.jordrotte.y].changeAliveStatus(False)
 
-        print(self.jordrotte.x, self.jordrotte.y)
+        # print(self.jordrotte.x, self.jordrotte.y)

@@ -44,11 +44,8 @@ def run():
 
                 # Ensure click is inside the grid
                 if 0 <= tileX < state.grid.width and 0 <= tileY < state.grid.height:
-                    # Left click: toggle cell alive/dead
                     if event.button == 1:
-                        cell = state.grid.cells[tileX][tileY]
-                        cell.changeAliveStatus(not cell.isAlive)
-                        print(f"Toggled cell {tileX},{tileY} -> {cell.isAlive}")
+                        print("Mouse clicked at ", tileX, tileY)
 
                     # Right click: move the jordrotte to clicked tile
                     elif event.button == 3:
