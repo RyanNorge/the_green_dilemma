@@ -33,11 +33,10 @@ class Node:
             self.bottom_left,
             self.bottom_right,
             self.right,
-            self.right,
+            self.left,
         ]:
-            if neighbor:
-                if neighbor.isAlive:
-                    aliveNeighbors += 1
+            if neighbor and neighbor.isAlive:
+                aliveNeighbors += 1
 
         if self.isAlive:
             if aliveNeighbors == 2 or aliveNeighbors == 3:
@@ -58,10 +57,19 @@ class Node:
                 self.fertilizerCountDown = 0
                 self.isAlive = False
 
+        if self.nextAlive == False:
+            if self.fertilizerCountDown < 1:
+                self.isFertilized = False
+                self.fertilizerCountDown = 0
+                self.isAlive = False
+
             else:
                 self.fertilizerCountDown -= 1
 
+                self.fertilizerCountDown -= 1
+
         else:
+            self.isAlive = True
             self.isAlive = True
 
     def fertilize(self):
