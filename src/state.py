@@ -61,3 +61,5 @@ class State:
     def checkEating(self):
         if self.grid.cells[self.jordrotte.x][self.jordrotte.y].isAlive:
             self.grid.cells[self.jordrotte.x][self.jordrotte.y].changeAliveStatus(False)
+
+        # self.jordrotte.play_eat_grass()
