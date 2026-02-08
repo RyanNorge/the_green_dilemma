@@ -38,9 +38,9 @@ class Jordrotte:
         self.screen = screen
         self.sprite = Sprite()
 
-    def move(self, dx, dy):
-        self.x += dx
-        self.y += dy
+    def move(self, x, y):
+        self.x = x
+        self.y = y
         return
 
     def draw(self, screen: pygame.Surface):
