@@ -17,7 +17,7 @@ class Node:
 
         self.nextAlive = False
         self.isAlive = random.choice([True, False])
-        self.fertilized=False
+        self.isFertilized=False
         self.fertilizerCountDown=0
 
     def changeAliveStatus(self, alive):
@@ -43,11 +43,22 @@ class Node:
                 self.nextAlive = False
 
     def updateStatus(self):
-        if self.fertilizerCountDown<1:
-            self.isAlive = self.nextAlive
-            self.fertilizerCountDown=0
+        if self.nextAlive==False:
+            if self.fertilizerCountDown<1:
+                self.isFertilized=False
+                self.fertilizerCountDown=0
+                self.isAlive=False
+            
+            else:
+                self.fertilizerCountDown-=1
+        
         else:
-            self.fertilizerCountDown-=1
+            self.isAlive=True
+            
+
+    def fertilize(self):
+        self.isFertilized=True
+        self.fertilizerCountDown=5
             
 
 
