@@ -6,3 +6,4 @@ Kontrollere:
 Gruppemedlemmer:
     Erlend - erlenak@uio.no
     Oliver - osforcad@uio.no
+    Mohammad - maabdulr@uio.no
