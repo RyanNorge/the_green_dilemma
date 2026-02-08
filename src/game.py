@@ -61,6 +61,13 @@ def run():
             if event.type == pygame.QUIT:
                 running = False
 
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    print("mouse clicked")
+                    mouseX, mouseY = event.pos
+                    
+
+
         # Get key presses
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
