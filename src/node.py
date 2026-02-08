@@ -57,24 +57,16 @@ class Node:
                 self.fertilizerCountDown = 0
                 self.isAlive = False
 
-        if self.nextAlive == False:
-            if self.fertilizerCountDown < 1:
-                self.isFertilized = False
-                self.fertilizerCountDown = 0
-                self.isAlive = False
-
             else:
-                self.fertilizerCountDown -= 1
-
                 self.fertilizerCountDown -= 1
 
         else:
             self.isAlive = True
-            self.isAlive = True
+
 
     def fertilize(self):
         self.isFertilized = True
-        self.fertilizerCountDown = 5
+        self.fertilizerCountDown+=5
 
 
 def build_grid(width, height):
@@ -185,7 +177,6 @@ def shortestAlive(Graph, start) -> Node | None:
 #  returnerer en liste med koordinater på formen [x,y]
 def findDirection(Graph, startX, startY) -> list[int, int]:
     startNode = Graph[startX][startY]
-    print(startNode)
     targetNode = shortestAlive(Graph, startNode)
 
     if targetNode is None:
