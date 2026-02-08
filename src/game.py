@@ -1,6 +1,7 @@
 import pygame
 import sys
 import time
+import random
 
 
 import temp_rutenett
@@ -71,7 +72,9 @@ def run():
         if time.time() > last_screen_update + 0.5:
             # Update jordrotte sprite
             jordrotte.sprite.next()
-            jordrotte.move(1, 0)  # Move right for demonstration
+            x = random.choice([-1, 0, 0, 1])
+            y = random.choice([-1, 0, 0, 1])
+            jordrotte.move(x, y)
 
             # Update display
             screen.fill(DARK_GRAY)
