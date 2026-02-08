@@ -57,12 +57,7 @@ class Jordrotte:
             ),
         )
     def play_eat_grass(self):
-<<<<<<< Updated upstream
         audio_manager.AudioManager.play_eat_grass()
 
     def trap(self):
         self.isTrapped = 6
-=======
-        self.audio.play_eat_grass()
-
->>>>>>> Stashed changes
