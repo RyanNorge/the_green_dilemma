@@ -1,4 +1,8 @@
 
+## Kontrollere
+    Høyreklikk på jordrotta for å fange den midlertidig.
+    Venstreklikk på gresset for å gjødsle det og holde det i livet fem ekstra runder
+
 ## Installation
 
 To run this project, you need to have UV installed. You can do this by running...
@@ -25,5 +29,9 @@ python main.py
 ```
 If you have UV installed then it will build a virtual enviroment and install packages for you.
 
-## Credits:
-danierb@ifi.uio.no
+
+## Gruppemedlemmer
+    Erlend - erlenak@uio.no
+    Oliver - osforcad@uio.no
+    Mohammad - maabdulr@uio.no
+    Ryan - danierb@ifi.uio.no
