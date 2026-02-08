@@ -8,7 +8,7 @@ from grid import Grid
 from screen import Screen
 from jordrotte import Jordrotte
 
-GRID_WIDTH, GRID_HEIGHT = 16, 12
+GRID_WIDTH, GRID_HEIGHT = 22, 12
 
 
 class State:
