@@ -25,22 +25,10 @@ class Node:
 
     def checkNextUpdate(self):
         aliveNeighbors = 0
-        if self.top and self.top.isAlive:
-            aliveNeighbors += 1
-        if self.bottom and self.bottom.isAlive:
-            aliveNeighbors += 1
-        if self.left and self.left.isAlive:
-            aliveNeighbors += 1
-        if self.right and self.right.isAlive:
-            aliveNeighbors += 1
-        if self.top_left and self.top_left.isAlive:
-            aliveNeighbors += 1
-        if self.top_right and self.top_right.isAlive:
-            aliveNeighbors += 1
-        if self.bottom_left and self.bottom_left.isAlive:
-            aliveNeighbors += 1
-        if self.bottom_right and self.bottom_right.isAlive:
-            aliveNeighbors += 1
+        for neighbor in [self.top, self.bottom, self.top_left, self.top_right,
+                         self.bottom_left, self.bottom_right, self.right, self.right]:
+            if neighbor.isAlive:
+                aliveNeighbors+=1
 
         if self.isAlive:
             if aliveNeighbors == 2 or aliveNeighbors == 3:
