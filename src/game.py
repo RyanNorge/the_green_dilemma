@@ -30,7 +30,6 @@ def run():
     running = True
     while running:
         state.next()
-        state.checkEating()
 
         # Handle events
         for event in pygame.event.get():

@@ -1,4 +1,16 @@
 import random
+import copy
+
+import pygame
+
+DIRT_TILE = pygame.image.load("assets/DirtTile.png")
+FLOWER_TILE = pygame.image.load("assets/FlowerTile.png")
+GRASS_TILE = pygame.image.load("assets/GrassTile.png")
+
+UNSPROUTED_TILE = pygame.image.load("assets/UnsproutedTile.png")
+
+GROWING_TILES = (DIRT_TILE, UNSPROUTED_TILE, GRASS_TILE)
+DYING_TILES = (GRASS_TILE, DIRT_TILE)
 
 
 class Node:
@@ -17,11 +29,18 @@ class Node:
 
         self.nextAlive = False
         self.isAlive = random.choice([True, False])
+        self.wasAlive = copy.copy(self.isAlive)
         self.isFertilized = False
         self.fertilizerCountDown = 0
 
+        self.sprites_set = []
+        self.sprites_set.append(GRASS_TILE if self.isAlive else DIRT_TILE)
+        self.sprite_frame = 0
+
     def changeAliveStatus(self, alive):
         self.isAlive = alive
+        self.sprites_set = DYING_TILES
+        self.sprite_frame = 99
 
     def checkNextUpdate(self):
         aliveNeighbors = 0
@@ -54,7 +73,7 @@ class Node:
         if self.nextAlive:
             self.isAlive = True
         else:
-            #fertilizer keeps the grass alive
+            # fertilizer keeps the grass alive
             if self.isFertilized and self.fertilizerCountDown > 0 and self.isAlive:
                 self.isAlive = True
                 self.fertilizerCountDown -= 1
@@ -65,6 +84,24 @@ class Node:
                 self.isAlive = False
                 self.isFertilized = False
                 self.fertilizerCountDown = 0
+
+    def updateSprite(self):
+
+        self.sprite_frame += 1
+
+        if self.isAlive and not self.wasAlive:
+            self.sprites_set = GROWING_TILES
+            self.sprite_frame = 0
+
+        if not self.isAlive and self.wasAlive:
+            self.sprites_set = DYING_TILES
+            self.sprite_frame = 0
+
+        self.wasAlive = self.isAlive
+
+    def getSprite(self) -> pygame.Surface:
+        index = min(self.sprite_frame, len(self.sprites_set) - 1)
+        return self.sprites_set[index]
 
     def fertilize(self):
         self.isFertilized = True
