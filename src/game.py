@@ -1,3 +1,4 @@
+from email.mime import audio
 import pygame
 import sys
 import time
@@ -33,6 +34,17 @@ def run():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    print("mouse clicked")
+                    mouseX, mouseY = event.pos
+                    # print(mouseX, mouseY)
+
+                    # inds the clicked tile:
+                    tileX = mouseX // state.screen.cell_size
+                    tileY = mouseY // state.screen.cell_size
+                    print(tileX, tileY)
 
     # Clean up
     pygame.quit()
