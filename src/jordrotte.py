@@ -73,5 +73,5 @@ class Jordrotte:
             ),
         )
 
-    def play_combat_sound(self):
-        audio_manager.AudioManager.play_combat()
+    def play_eat_grass(self):
+        audio_manager.AudioManager.play_eat_grass()
