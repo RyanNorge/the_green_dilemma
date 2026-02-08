@@ -56,6 +56,18 @@ def run():
             if event.type == pygame.QUIT:
                 running = False
 
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    print("mouse clicked")
+                    mouseX, mouseY = event.pos
+                    #print(mouseX, mouseY)
+
+                    # inds the clicked tile:
+                    tileX = mouseX // size
+                    tileY = mouseY // size
+                    print(tileX, tileY)
+
+                    
         # Get key presses
         # keys = pygame.key.get_pressed()
         # if keys[pygame.K_LEFT]:
