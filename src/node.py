@@ -55,7 +55,12 @@ class Node:
                 self.nextAlive = False
 
     def updateStatus(self):
-        self.isAlive = self.nextAlive
+        if self.fertilizerCountDown<1:
+            self.isAlive = self.nextAlive
+            self.fertilizerCountDown=0
+        else:
+            self.fertilizerCountDown-=1
+            
 
 
 def build_grid(width, height):
