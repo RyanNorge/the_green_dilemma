@@ -1,6 +1,7 @@
 import pygame
 import os
 
+
 class AudioManager:
     def __init__(self):
         self.base_path = os.path.join("assets", "music")

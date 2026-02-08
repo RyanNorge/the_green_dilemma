@@ -86,16 +86,18 @@ def build_grid(width, height):
 
 # Method for calling checkNextUpdate on all nodes in the grid
 def checkNextUpdateAll(grid):
-    for x in grid:
-        for y in grid[x]:
-            grid[x][y].checkNextUpdate()
+    for row in grid:
+        for node in row:
+            node: Node
+            node.checkNextUpdate()
 
 
 # Method for calling updateStatus on all nodes in the grid
 def updateStatusAll(grid):
-    for x in grid:
-        for y in grid[x]:
-            grid[x][y].updateStatus()
+    for row in grid:
+        for node in row:
+            node: Node
+            node.updateStatus()
 
 
 def updateAllNodes(grid):
