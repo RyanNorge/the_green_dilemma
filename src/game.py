@@ -25,6 +25,7 @@ def run():
     # Create game objects
     state = State()
     Grid = state.grid
+    Jordrotte = state.jordrotte
 
     # Game loop
     running = True
@@ -50,6 +51,7 @@ def run():
 
                     elif event.button == 1:
                         print("Jordrotte fanget")
+                        Jordrotte.trap()
 
     # Clean up
     pygame.quit()
