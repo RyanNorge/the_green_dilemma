@@ -64,13 +64,7 @@ def run():
 
         # update world
         if time.time() > last_world_update + 1:
-            # update nodes
-            for row in grid:
-                for node in row:
-                    node.checkNextUpdate()
-            for row in grid:
-                for node in row:
-                    node.updateStatus()
+            Node.updateAllNodes(grid)
 
             last_world_update = time.time()
 
