@@ -44,7 +44,7 @@ class State:
             self.last_jordrotte_update = time.time()
 
         # update grass
-        grass_update_interval = 2
+        grass_update_interval = 2.5
         if time_now > self.last_grass_update + grass_update_interval:
             node.updateAllNodes(self.grid.cells)
             self.last_grass_update = time_now

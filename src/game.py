@@ -3,6 +3,7 @@ import pygame
 import sys
 import time
 import random
+from gameover import GameOver
 
 
 import grid as Grid
@@ -17,10 +18,15 @@ def run():
 
     # Initialize pygame
     pygame.init()
+    pygame.mixer.init()
 
-    # Set up audio
+    # Set up screen and audio
+    screen = pygame.display.set_mode((800,600))
     audio_manager = AudioManager()
     audio_manager.play_background()
+
+    #Opprett Game Over
+   
 
     # Create game objects
     state = State()
@@ -49,9 +55,20 @@ def run():
                         print("Mouse clicked at ", tileX, tileY)
                         Grid.cells[tileX][tileY].fertilize()
 
-                    elif event.button == 1:
-                        print("Jordrotte fanget")
-                        Jordrotte.trap()
+                    # Right click: move the jordrotte to clicked tile
+                    elif event.button == 3:
+                        state.jordrotte.move(tileX, tileY)
+                        print(f"Moved jordrotte to {tileX},{tileY}")
+        
+    # Game over
+    gameover = GameOver(screen, audio)
+   
+   #Sjekke Game Over
+    result = gameover.check(grid)
+    if result:
+        pygame.time.delay(2000)
+        running = False
+
 
     # Clean up
     pygame.quit()

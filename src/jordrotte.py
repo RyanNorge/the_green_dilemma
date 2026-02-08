@@ -65,7 +65,6 @@ class Jordrotte:
                 self.y * 50 - 25,
             ),
         )
-
     def play_eat_grass(self):
         audio_manager.AudioManager.play_eat_grass()
 
