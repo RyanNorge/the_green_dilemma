@@ -24,6 +24,7 @@ def run():
 
     # Create game objects
     state = State()
+    Grid = state.grid
 
     # Game loop
     running = True
@@ -44,13 +45,12 @@ def run():
 
                 # Ensure click is inside the grid
                 if 0 <= tileX < state.grid.width and 0 <= tileY < state.grid.height:
-                    if event.button == 1:
+                    if event.button == 3:
                         print("Mouse clicked at ", tileX, tileY)
+                        Grid.cells[tileX][tileY].fertilize()
 
-                    # Right click: move the jordrotte to clicked tile
-                    elif event.button == 3:
-                        state.jordrotte.move(tileX, tileY)
-                        print(f"Moved jordrotte to {tileX},{tileY}")
+                    elif event.button == 1:
+                        print("Jordrotte fanget")
 
     # Clean up
     pygame.quit()
