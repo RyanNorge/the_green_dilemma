@@ -47,3 +47,7 @@ class State:
             self.last_grass_update = time.time()
 
         self.screen.render()
+
+    def checkEating(self):
+        if self.grid.cells[self.jordrotte.x][self.jordrotte.y].isAlive:
+            self.grid.cells[self.jordrotte.x][self.jordrotte.y].changeAliveStatus(False)

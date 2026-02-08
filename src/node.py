@@ -179,6 +179,10 @@ def findDirection(Graph, startX, startY) -> list[int, int]:
     startNode = Graph[startX][startY]
     print(startNode)
     targetNode = shortestAlive(Graph, startNode)
+
+    if targetNode is None:
+        return [startX, startY]
+
     targetX = targetNode.xPos
     targetY = targetNode.yPos
 
