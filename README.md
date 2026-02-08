@@ -37,3 +37,4 @@ If you have UV installed then it will build a virtual enviroment and install pac
     Oliver - osforcad@uio.no
     Mohammad - maabdulr@uio.no
     Ryan - danierb@ifi.uio.no
+    Thananthan - Thanantk@uio.no
