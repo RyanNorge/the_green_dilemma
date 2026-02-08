@@ -66,13 +66,24 @@ class Node:
                 aliveNeighbors += 1
 
         if self.isAlive:
-            if aliveNeighbors == 2 or aliveNeighbors == 3:
+            if (
+                aliveNeighbors == 2
+                or aliveNeighbors == 3
+                or aliveNeighbors == 4
+                or aliveNeighbors == 5
+                or aliveNeighbors == 6
+            ):
                 self.nextAlive = True
             else:
                 self.nextAlive = False
 
         else:
-            if aliveNeighbors == 3:
+            if (
+                aliveNeighbors == 3
+                or aliveNeighbors == 4
+                or aliveNeighbors == 5
+                or aliveNeighbors == 6
+            ):
                 self.nextAlive = True
             else:
                 self.nextAlive = False

@@ -3,6 +3,8 @@
     Høyreklikk på jordrotta for å fange den midlertidig.
     Venstreklikk på gresset for å gjødsle det og holde det i livet fem ekstra runder
 
+## LYD PÅ!!!
+
 ## Installation
 
 To run this project, you need to have UV installed. You can do this by running...
