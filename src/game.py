@@ -40,9 +40,7 @@ def run():
     # Game variables
     x, y = 100, 100
     speed = 5
-    
-    
-    
+
     audio = AudioManager()
     audio.play_background()
 
