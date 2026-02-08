@@ -9,6 +9,7 @@ class Sprite:
         # load sprites
         idle = pygame.image.load("assets/Jordrotte.png")
         eating = pygame.image.load("assets/Jordrotte_Attack.png")
+        self.trapped = pygame.image.load("assets/Jordrotte_Trapped.png")
 
         self.sprites = [idle, eating]
         self._current_index = 0
@@ -26,6 +27,9 @@ class Sprite:
 
     def get(self) -> pygame.Surface:
         return self.sprites[self._current_index]
+
+    def get_Trapped(self):
+        return self.trapped
 
 
 class Jordrotte:
@@ -49,8 +53,13 @@ class Jordrotte:
         self.isTrapped -= 1
 
     def draw(self, screen: pygame.Surface):
+        image = self.sprite.get()
+
+        if self.isTrapped:
+            image = self.sprite.get_Trapped()
+
         screen.blit(
-            self.sprite.get(),
+            image,
             (
                 self.x * 50 - 25,
                 self.y * 50 - 25,

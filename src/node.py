@@ -7,10 +7,16 @@ DIRT_TILE = pygame.image.load("assets/DirtTile.png")
 FLOWER_TILE = pygame.image.load("assets/FlowerTile.png")
 GRASS_TILE = pygame.image.load("assets/GrassTile.png")
 
+HOLE = pygame.image.load("assets/TilthTile.png")
+START_GROW = pygame.image.load("assets/FertilizerTile.png")
+
+TRAMPLED_TILE = pygame.image.load("assets/TrampledTile.png")
 UNSPROUTED_TILE = pygame.image.load("assets/UnsproutedTile.png")
 
-GROWING_TILES = (DIRT_TILE, UNSPROUTED_TILE, GRASS_TILE)
-DYING_TILES = (GRASS_TILE, DIRT_TILE)
+GROWING_TILES = (DIRT_TILE, START_GROW, UNSPROUTED_TILE, GRASS_TILE)
+DYING_TILES = (GRASS_TILE, TRAMPLED_TILE, HOLE, DIRT_TILE)
+
+FERTILE_GROWING_TILES = (HOLE, START_GROW, UNSPROUTED_TILE, FLOWER_TILE)
 
 
 class Node:
