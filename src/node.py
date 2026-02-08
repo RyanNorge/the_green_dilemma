@@ -103,23 +103,39 @@ def updateAllNodes(grid):
     updateStatusAll(grid)
 
 
-#finner den nærmeste noden som lever
+# finner den nærmeste noden som lever
 def shortestAlive(Graph, start):
     visited = {start}
     queue = []
 
     # Add all 8 neighbors of start to queue
-    for neighbor in [start.top_left, start.left, start.bottom_left, start.bottom,
-                     start.bottom_right, start.right, start.top_right, start.top]:
+    for neighbor in [
+        start.top_left,
+        start.left,
+        start.bottom_left,
+        start.bottom,
+        start.bottom_right,
+        start.right,
+        start.top_right,
+        start.top,
+    ]:
         queue.append(neighbor)
         visited.add(neighbor)
 
     while queue:
         n = queue.pop(0)
-        
+
         # Check all 8 neighbors
-        for neighbor in [n.top_left, n.left, n.bottom_left, n.bottom,
-                         n.bottom_right, n.right, n.top_right, n.top]:
+        for neighbor in [
+            n.top_left,
+            n.left,
+            n.bottom_left,
+            n.bottom,
+            n.bottom_right,
+            n.right,
+            n.top_right,
+            n.top,
+        ]:
             if neighbor is None:
                 continue
             if neighbor.isAlive:
@@ -127,14 +143,29 @@ def shortestAlive(Graph, start):
             if neighbor not in visited:
                 queue.append(neighbor)
                 visited.add(neighbor)
-    
+
     return None
-            
-            
 
 
+# Funksjon for å finne retningen til et koordinat
+#returnerer en liste med koordinater på formen [x,y]
+def findDirection(Graph, start):
+    targetNode = shortestAlive(Graph, start)
+    targetX = targetNode.xPos
+    targetY = targetNode.yPos
+    startX=start.xPos
+    startY=start.yPos
 
+    if (abs(targetX-startX)>abs(targetY-startY)):
+        if targetX>startX:
+            return [startX+1, startY]
 
-
-
+        else:
+            return [startX-1, startY]
+    
+    else:
+        if targetY>startY:
+            return [startX, startY+1]
+        else:
+            return [startX, startX-1]
 
