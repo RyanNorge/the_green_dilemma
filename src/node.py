@@ -5,8 +5,7 @@ class Node:
     def __init__(self, xPos, yPos):
         self.xPos = xPos
         self.yPos = yPos
-        self.nextAlive = False
-        self.isAlive = random.choice([True, False])
+        
         self.top = None
         self.bottom = None
         self.left = None
@@ -15,6 +14,11 @@ class Node:
         self.top_right = None
         self.bottom_left = None
         self.bottom_right = None
+
+        self.nextAlive = False
+        self.isAlive = random.choice([True, False])
+        self.fertilized=False
+        self.fertilizerCountDown=0
 
     def changeAliveStatus(self, alive):
         self.isAlive = alive
