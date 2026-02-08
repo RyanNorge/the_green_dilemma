@@ -37,15 +37,23 @@ def run():
                 running = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    print("mouse clicked")
-                    mouseX, mouseY = event.pos
-                    # print(mouseX, mouseY)
+                # Get mouse and clicked tile
+                mouseX, mouseY = event.pos
+                tileX = mouseX // state.screen.cell_size
+                tileY = mouseY // state.screen.cell_size
 
-                    # inds the clicked tile:
-                    tileX = mouseX // state.screen.cell_size
-                    tileY = mouseY // state.screen.cell_size
-                    print(tileX, tileY)
+                # Ensure click is inside the grid
+                if 0 <= tileX < state.grid.width and 0 <= tileY < state.grid.height:
+                    # Left click: toggle cell alive/dead
+                    if event.button == 1:
+                        cell = state.grid.cells[tileX][tileY]
+                        cell.changeAliveStatus(not cell.isAlive)
+                        print(f"Toggled cell {tileX},{tileY} -> {cell.isAlive}")
+
+                    # Right click: move the jordrotte to clicked tile
+                    elif event.button == 3:
+                        state.jordrotte.move(tileX, tileY)
+                        print(f"Moved jordrotte to {tileX},{tileY}")
 
     # Clean up
     pygame.quit()
