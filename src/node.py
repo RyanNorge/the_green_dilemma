@@ -174,12 +174,12 @@ def shortestAlive(Graph, start) -> Node | None:
 
 # Funksjon for å finne retningen til et koordinat
 #  returnerer en liste med koordinater på formen [x,y]
-def findDirection(Graph, start) -> list[int, int]:
-    targetNode = shortestAlive(Graph, start)
+def findDirection(Graph, startX, startY) -> list[int, int]:
+    startNode = Graph[startX][startY]
+    print(startNode)
+    targetNode = shortestAlive(Graph, startNode)
     targetX = targetNode.xPos
     targetY = targetNode.yPos
-    startX = start.xPos
-    startY = start.yPos
 
     if abs(targetX - startX) > abs(targetY - startY):
         if targetX > startX:
@@ -189,8 +189,6 @@ def findDirection(Graph, start) -> list[int, int]:
             return [startX + 1, startY]
 
         else:
-            return [startX - 1, startY]
-
             return [startX - 1, startY]
 
     else:
@@ -199,5 +197,4 @@ def findDirection(Graph, start) -> list[int, int]:
         if targetY > startY:
             return [startX, startY + 1]
         else:
-            return [startX, startX - 1]
             return [startX, startX - 1]
