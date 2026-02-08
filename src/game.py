@@ -6,6 +6,7 @@ import time
 import temp_rutenett
 import node as Node
 from audio_manager import AudioManager
+from jordrotte import Jordrotte
 
 
 def run():
@@ -25,6 +26,7 @@ def run():
 
     # Create game objects
     grid = Node.build_grid(30, 30)
+    jordrotte = Jordrotte(screen)
 
     # Clock to control framerate
     clock = pygame.time.Clock()
@@ -39,12 +41,29 @@ def run():
 
     # Game loop
     running = True
-    last_update = 0
+    last_world_update = 0
+    last_screen_update = 0
     while running:
         clock.tick(FPS)  # Limit frame rate
 
-        # update world every 1 sec
-        if time.time() > last_update + 1:
+        # Handle events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        # Get key presses
+        # keys = pygame.key.get_pressed()
+        # if keys[pygame.K_LEFT]:
+        #     x -= speed
+        # if keys[pygame.K_RIGHT]:
+        #     x += speed
+        # if keys[pygame.K_UP]:
+        #     y -= speed
+        # if keys[pygame.K_DOWN]:
+        #     y += speed
+
+        # update world
+        if time.time() > last_world_update + 1:
             # update nodes
             for row in grid:
                 for node in row:
@@ -53,31 +72,20 @@ def run():
                 for node in row:
                     node.updateStatus()
 
-            last_update = time.time()
+            last_world_update = time.time()
 
-        # Handle events
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+        if time.time() > last_screen_update + 0.5:
+            # Update jordrotte sprite
+            jordrotte.sprite.next()
+            jordrotte.move(1, 0)  # Move right for demonstration
 
-        # Get key presses
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
-            x -= speed
-        if keys[pygame.K_RIGHT]:
-            x += speed
-        if keys[pygame.K_UP]:
-            y -= speed
-        if keys[pygame.K_DOWN]:
-            y += speed
+            # Update display
+            screen.fill(DARK_GRAY)
+            temp_rutenett.draw(screen, grid)
+            jordrotte.draw(screen)
+            pygame.display.flip()
 
-        # Draw
-        screen.fill(DARK_GRAY)
-
-        # Update display
-        temp_rutenett.draw(screen, grid)
-
-        pygame.display.flip()
+            last_screen_update = time.time()
 
     # Clean up
     pygame.quit()
