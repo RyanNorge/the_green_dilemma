@@ -8,12 +8,13 @@ DARK_GRAY = (50, 50, 50)
 
 
 class Screen:
-    def __init__(self) -> None:
+    def __init__(self, width, height) -> None:
         # Set up the window
         self.grid: Grid
-        self.width = 800
-        self.height = 600
         self.cell_size = 50
+        self.width = width * self.cell_size
+        self.height = height * self.cell_size
+
         self.surface = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Conway's Game of Death")
 

@@ -81,6 +81,7 @@ def build_grid(width, height):
 
     # Create nodes
     grid = []
+    # grid is indexed as grid[x][y] (x = column, y = row)
     for x in range(width):
         grid.append([])
         for y in range(height):
@@ -88,14 +89,15 @@ def build_grid(width, height):
 
     # Helper to get node or None
     def get(x, y):
+        # return node at column x and row y, or None if out of bounds
         if 0 <= x < width and 0 <= y < height:
-            return grid[y][x]
+            return grid[x][y]
         return None
 
-    # Link neighbors
-    for y in range(height):
-        for x in range(width):
-            node = grid[y][x]
+    # Link neighbors (iterate columns then rows to match grid[x][y])
+    for x in range(width):
+        for y in range(height):
+            node = grid[x][y]
             node.top = get(x, y - 1)
             node.bottom = get(x, y + 1)
             node.left = get(x - 1, y)
@@ -130,44 +132,51 @@ def updateAllNodes(grid):
 
 # finner den nærmeste noden som lever
 def shortestAlive(Graph, start) -> Node | None:
-    visited = {start}
+    # Breadth-first search from start to find the nearest alive node
+    if start is None:
+        return None
+
+    visited = set()
     queue = []
 
-    # Add all 8 neighbors of start to queue
-    for neighbor in [
+    visited.add(start)
+
+    # seed queue with start's neighbors
+    for n in [
         start.top_left,
+        start.top,
+        start.top_right,
         start.left,
+        start.right,
         start.bottom_left,
         start.bottom,
         start.bottom_right,
-        start.right,
-        start.top_right,
-        start.top,
     ]:
-        queue.append(neighbor)
-        visited.add(neighbor)
+        if n is not None:
+            queue.append(n)
+            visited.add(n)
 
     while queue:
         n = queue.pop(0)
+        if n.isAlive:
+            return n
 
-        # Check all 8 neighbors
-        for neighbor in [
+        for nbr in [
             n.top_left,
+            n.top,
+            n.top_right,
             n.left,
+            n.right,
             n.bottom_left,
             n.bottom,
             n.bottom_right,
-            n.right,
-            n.top_right,
-            n.top,
         ]:
-            if neighbor is None:
+            if nbr is None:
                 continue
-            if neighbor.isAlive:
-                return neighbor
-            if neighbor not in visited:
-                queue.append(neighbor)
-                visited.add(neighbor)
+            if nbr in visited:
+                continue
+            visited.add(nbr)
+            queue.append(nbr)
 
     return None
 
@@ -178,23 +187,18 @@ def findDirection(Graph, startX, startY) -> list[int, int]:
     startNode = Graph[startX][startY]
     print(startNode)
     targetNode = shortestAlive(Graph, startNode)
+
+    if targetNode is None:
+        return [startX, startY]
+
     targetX = targetNode.xPos
     targetY = targetNode.yPos
 
-    if abs(targetX - startX) > abs(targetY - startY):
-        if targetX > startX:
-            return [startX + 1, startY]
-    if abs(targetX - startX) > abs(targetY - startY):
-        if targetX > startX:
-            return [startX + 1, startY]
+    dx = targetX - startX
+    dy = targetY - startY
 
-        else:
-            return [startX - 1, startY]
-
+    # prefer moving along the axis with the larger distance
+    if abs(dx) >= abs(dy):
+        return [startX + (1 if dx > 0 else -1 if dx < 0 else 0), startY]
     else:
-        if targetY > startY:
-            return [startX, startY + 1]
-        if targetY > startY:
-            return [startX, startY + 1]
-        else:
-            return [startX, startX - 1]
+        return [startX, startY + (1 if dy > 0 else -1 if dy < 0 else 0)]

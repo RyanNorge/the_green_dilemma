@@ -8,14 +8,14 @@ from grid import Grid
 from screen import Screen
 from jordrotte import Jordrotte
 
-GRID_WIDTH, GRID_HEIGHT = 30, 30
+GRID_WIDTH, GRID_HEIGHT = 16, 12
 
 
 class State:
     def __init__(self) -> None:
         # self.grid = grid.build_grid(GRID_WIDTH, GRID_HEIGHT)
         self.grid = Grid(GRID_WIDTH, GRID_HEIGHT)
-        self.screen = Screen()
+        self.screen = Screen(GRID_WIDTH, GRID_HEIGHT)
         self.jordrotte = Jordrotte(self.screen)
 
         self.screen.set_objects(self.grid, self.jordrotte)
@@ -47,3 +47,9 @@ class State:
             self.last_grass_update = time.time()
 
         self.screen.render()
+
+    def checkEating(self):
+        if self.grid.cells[self.jordrotte.x][self.jordrotte.y].isAlive:
+            self.grid.cells[self.jordrotte.x][self.jordrotte.y].changeAliveStatus(False)
+
+        # print(self.jordrotte.x, self.jordrotte.y)
