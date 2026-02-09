@@ -1,4 +1,3 @@
-from email.mime import audio
 import pygame
 import sys
 import time
@@ -21,20 +20,21 @@ def run():
     pygame.mixer.init()
 
     # Set up screen and audio
-    screen = pygame.display.set_mode((800,600))
+    screen = pygame.display.set_mode((800, 600))
     audio_manager = AudioManager()
     audio_manager.play_background()
 
-    #Opprett Game Over
-   
+    # Opprett Game Over
 
     # Create game objects
     state = State()
     Grid = state.grid
     Jordrotte = state.jordrotte
+    gameover = GameOver(screen, audio_manager)
 
     # Game loop
     running = True
+    last_end_check = time.time()
     while running:
         state.next()
 
@@ -59,16 +59,15 @@ def run():
                     elif event.button == 3:
                         state.jordrotte.move(tileX, tileY)
                         print(f"Moved jordrotte to {tileX},{tileY}")
-        
-    # Game over
-    gameover = GameOver(screen, audio)
-   
-   #Sjekke Game Over
-    result = gameover.check(grid)
-    if result:
-        pygame.time.delay(2000)
-        running = False
 
+        # pygame.time.delay(1000)
+
+        # Sjekke Game Over
+        now_time = time.time()
+        if now_time > last_end_check + 2:
+            is_game_over = gameover.check(Grid)
+            running = not is_game_over
+            last_end_check = now_time
 
     # Clean up
     pygame.quit()
