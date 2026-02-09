@@ -21,12 +21,11 @@ def run():
     pygame.mixer.init()
 
     # Set up screen and audio
-    screen = pygame.display.set_mode((800,600))
+    screen = pygame.display.set_mode((800, 600))
     audio_manager = AudioManager()
     audio_manager.play_background()
 
-    #Opprett Game Over
-   
+    # Opprett Game Over
 
     # Create game objects
     state = State()
@@ -59,16 +58,15 @@ def run():
                     elif event.button == 3:
                         state.jordrotte.move(tileX, tileY)
                         print(f"Moved jordrotte to {tileX},{tileY}")
-        
+
     # Game over
     gameover = GameOver(screen, audio)
-   
-   #Sjekke Game Over
+
+    # Sjekke Game Over
     result = gameover.check(grid)
     if result:
         pygame.time.delay(2000)
         running = False
-
 
     # Clean up
     pygame.quit()

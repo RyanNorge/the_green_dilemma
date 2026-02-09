@@ -14,12 +14,14 @@ class Sprite:
         self.sprites = [idle, eating]
         self._current_index = 0
 
-        sprite_width, sprite_height = idle.get_size()
-
+        # resize sprites
         for i, sprite in enumerate(self.sprites):
-            self.sprites[i] = pygame.transform.scale(
-                sprite, (sprite_width * 2, sprite_height * 2)
-            )
+            self.sprites[i] = self.resize_sprite(sprite)
+        self.trapped = self.resize_sprite(self.trapped)
+
+    def resize_sprite(self, sprite: pygame.Surface):
+        sprite_width, sprite_height = sprite.get_size()
+        return pygame.transform.scale(sprite, (sprite_width * 2, sprite_height * 2))
 
     def next(self) -> None:
         # loop index over list of sprites
@@ -45,6 +47,7 @@ class Jordrotte:
         self.isTrapped = 0
 
     def move(self, x, y):
+
         if self.isTrapped < 1:
             self.x = x
             self.y = y
