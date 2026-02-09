@@ -14,6 +14,7 @@ class Grid:
         self.height = height
         self.cell_size = 50
         self.cells = build_grid(width, height)
+        self.coverage = 0.6
 
     def get_cell(self, x, y) -> Node:
         """X is width, Y is height, starting from upper left corner."""

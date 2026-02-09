@@ -67,7 +67,7 @@ def run():
                                 jord.trap()
 
         # Sjekke Game Over
-        if time.time() > last_ending_check + 2:
+        if time.time() > last_ending_check + 1:
             game_over_state = state.gameover.check(state.grid)
 
             if game_over_state == "win":
