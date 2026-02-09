@@ -56,13 +56,12 @@ def run():
 
                 # Ensure click is inside the grid
                 if 0 <= tileX < state.grid.width and 0 <= tileY < state.grid.height:
-                    if event.button == 3:
+                    if event.button == 1:
                         # print("Mouse clicked at ", tileX, tileY)
                         state.grid.cells[tileX][tileY].fertilize()
 
-                    for jord in state.mange_jordrotter:
-                        # Right click to trap the jordrotte
-                        if event.button == 1:
+                        for jord in state.mange_jordrotter:
+                            # click on the jordrotte to trap it
                             if tileX == jord.x and tileY == jord.y:
                                 # print("Jordrotte fanget")
                                 jord.trap()
