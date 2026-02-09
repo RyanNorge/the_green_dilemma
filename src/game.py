@@ -5,12 +5,17 @@ import random
 from gameover import GameOver
 
 
-import grid as Grid
-import node as Node
+from grid import Grid
 from audio_manager import AudioManager
 from jordrotte import Jordrotte
 from screen import Screen
 from state import State
+
+
+GRID_WIDTH, GRID_HEIGHT = 22, 12
+
+
+def create_new_state(oldstate: None | State = None): ...
 
 
 def run():
@@ -23,18 +28,14 @@ def run():
     screen = pygame.display.set_mode((800, 600))
     audio_manager = AudioManager()
     audio_manager.play_background()
-    gameover = GameOver(screen, audio_manager)
 
     # Opprett Game Over
 
     # Create game objects
-    state = State()
-    Grid = state.grid
-    Jordrotte = state.jordrotte
+    # grid = Grid(GRID_WIDTH, GRID_HEIGHT)
+    screen = Screen(GRID_WIDTH, GRID_HEIGHT)
 
-    # go though a couple of generations to get the right pattern going
-    state.next()
-    state.next()
+    state = State(2, screen, audio_manager)
 
     # Game loop
     running = True
@@ -56,26 +57,25 @@ def run():
                 # Ensure click is inside the grid
                 if 0 <= tileX < state.grid.width and 0 <= tileY < state.grid.height:
                     if event.button == 3:
-                        print("Mouse clicked at ", tileX, tileY)
-                        Grid.cells[tileX][tileY].fertilize()
+                        # print("Mouse clicked at ", tileX, tileY)
+                        state.grid.cells[tileX][tileY].fertilize()
 
-                    # Right click to trap the jordrotte
-                    if event.button == 1:
-                        if tileX == Jordrotte.x and tileY == Jordrotte.y:
-                            print("Jordrotte fanget")
-                            Jordrotte.trap()
-
-                        # Right click: move the jordrotte to clicked tile
-                        # state.jordrotte.move(tileX, tileY)
-                        # print(f"Moved jordrotte to {tileX},{tileY}")
-        # Game over
+                    for jord in state.mange_jordrotter:
+                        # Right click to trap the jordrotte
+                        if event.button == 1:
+                            if tileX == jord.x and tileY == jord.y:
+                                # print("Jordrotte fanget")
+                                jord.trap()
 
         # Sjekke Game Over
-        now_time = time.time()
-        if now_time > last_ending_check + 2:
-            game_has_ended = gameover.check(Grid)
-            running = not game_has_ended
-            last_ending_check = now_time
+        if time.time() > last_ending_check + 2:
+            game_over_state = state.gameover.check(state.grid)
+
+            if game_over_state == "win":
+                state = State(state.num_jordrotter * 2, screen, audio_manager)
+            elif game_over_state == "lose":
+                running = False
+            last_ending_check = time.time()
 
     # Clean up
     pygame.quit()

@@ -1,4 +1,5 @@
 import pygame
+import random
 
 import audio_manager
 
@@ -35,11 +36,11 @@ class Sprite:
 
 
 class Jordrotte:
-    def __init__(self, screen: pygame.Surface):
+    def __init__(self, screen: pygame.Surface, grid_width: int, grid_height: int):
 
         # starting location
-        self.x = 5
-        self.y = 5
+        self.x = random.choice(range(grid_width - 1))
+        self.y = random.choice(range(grid_height - 1))
         self.speed = 5
         self.screen = screen
         self.sprite = Sprite()
@@ -73,4 +74,4 @@ class Jordrotte:
         audio_manager.AudioManager.play_eat_grass()
 
     def trap(self):
-        self.isTrapped = 6
+        self.isTrapped = 12

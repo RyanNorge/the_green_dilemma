@@ -18,16 +18,17 @@ class Screen:
         self.surface = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Conway's Game of Death")
 
-    def set_objects(self, grid: Grid, jordrotte: Jordrotte) -> None:
+    def set_objects(self, grid: Grid, mange_jordrotter: list[Jordrotte]) -> None:
         self.grid = grid
-        self.jordrotte = jordrotte
+        self.mange_jordrotter = mange_jordrotter
 
     def render(self) -> None:
 
         # build frame
         self.surface.fill(DARK_GRAY)
         self.grid.draw(self.surface)
-        self.jordrotte.draw(self.surface)
+        for jord in self.mange_jordrotter:
+            jord.draw(self.surface)
 
         # display frame
         pygame.display.flip()

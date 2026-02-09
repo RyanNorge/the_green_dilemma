@@ -1,8 +1,33 @@
 import pygame
+from typing import Literal
+import random
 
 from audio_manager import AudioManager
 from grid import Grid
 from node import Node
+from screen import Screen
+
+STUPID_COMPLEMENTS = (
+    "You are so effing smart!",
+    "You're, like, a genious!",
+    "You win a prize or something!",
+    "Your mom must be so proud!",
+    "You accomplished soemthing really important!",
+    "This is a good use of your time!",
+)
+
+STUPID_INSULTS = (
+    "Man, you must be so ashamed of yourself!",
+    "Wow, what an idiot! And a looser!",
+    "You are stupid. Your friends are gonna laugh at you.",
+    "If you've failed at this, I hate to think how the rest of your life must be going!",
+)
+
+STUPID_RECCOMENDATIONS = (
+    "You should go think about all your failures before trying again.",
+    "Maybe you should quit and never try hard things again.",
+    "Find a new hobby. Seems video games are not for you.",
+)
 
 
 class GameOver:
@@ -10,13 +35,13 @@ class GameOver:
     LOSE_COLOR = (200, 0, 0)
     FONT_SIZE = 48
 
-    def __init__(self, screen: pygame.Surface, audio: AudioManager):
+    def __init__(self, screen: Screen, audio: AudioManager):
         self.screen = screen
         self.audio = audio
         self.font = pygame.font.SysFont(None, self.FONT_SIZE)
         self.finished = False
 
-    def check(self, grid: Grid) -> bool:
+    def check(self, grid: Grid) -> Literal["win", "lose", "continue"]:
 
         total_cells = grid.height * grid.width
 
@@ -30,31 +55,42 @@ class GameOver:
         coverage = grass_cells / total_cells
         # print(coverage)
 
-        if coverage >= 0.85 and not self.finished:
+        if coverage >= 0.7 and not self.finished:
+            print(f"game ending. WON with coverage: {coverage}")
             self.finished = True
             self.audio.stop_music()
             self.audio.play_win()
-            self.display_message("YOU WIN", self.WIN_COLOR)
-            return True
+            self.display_message(
+                f"Kept the grass alive!\n\n{random.choice(STUPID_COMPLEMENTS)}\n\n",
+                self.WIN_COLOR,
+            )
+            pygame.time.delay(3000)
+            return "win"
 
-        if coverage <= 0.4 and not self.finished:
+        if coverage <= 0.2 and not self.finished:
+            print(f"game ending. LOST with coverage: {coverage}")
             self.finished = True
             self.audio.stop_music()
             self.audio.play_lose()
-            self.display_message("YOU LOSE", self.LOSE_COLOR)
-            return True
+            self.display_message(
+                "YOU LOSE!!!!!!!!!\n\n"
+                f"{random.choice(STUPID_INSULTS)}\n\n"
+                f"{random.choice(STUPID_RECCOMENDATIONS)}\n\n",
+                self.LOSE_COLOR,
+            )
+            pygame.time.delay(6000)
+            return "lose"
 
-        return False
+        return "continue"
 
     def display_message(self, text, color):
-        overlay = pygame.Surface(self.screen.get_size())
+        overlay = pygame.Surface(self.screen.surface.get_size())
         overlay.set_alpha(180)
         overlay.fill((0, 0, 0))
-        self.screen.blit(overlay, (0, 0))
+        self.screen.surface.blit(overlay, (0, 0))
 
         rendered = self.font.render(text, True, color)
-        rect = rendered.get_rect(center=self.screen.get_rect().center)
-        self.screen.blit(rendered, rect)
+        rect = rendered.get_rect(center=self.screen.surface.get_rect().center)
+        self.screen.surface.blit(rendered, rect)
 
         pygame.display.flip()
-        pygame.time.delay(3000)

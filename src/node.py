@@ -162,7 +162,7 @@ class Node:
         self.sprites_set = FERTILE_GROWING_TILES
 
 
-def build_grid(width, height):
+def build_grid(width, height) -> list[list[Node]]:
 
     # Create nodes
     grid = []
