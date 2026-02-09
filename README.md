@@ -1,5 +1,5 @@
 ## LYD PÅ!!!
-    Vi har litt 
+    Vi har noen lydeffekter og episk bakgrunnsmusikk.
 
 ## Kontrollere
     Klikk på gresset/jorden for å gjødsle det og holde det i livet ekstra runder
