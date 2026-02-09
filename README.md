@@ -1,9 +1,13 @@
+## LYD PÅ!!!
+    Vi har litt 
 
 ## Kontrollere
-    Høyreklikk på jordrotta for å fange den midlertidig.
-    Venstreklikk på gresset for å gjødsle det og holde det i livet fem ekstra runder
+    Klikk på gresset/jorden for å gjødsle det og holde det i livet ekstra runder
+    Eller klikk på jordrottene for å fange dem midlertidig.
 
-## LYD PÅ!!!
+    Om du får 70 prosent eller mer celler med gress, så forsetter du til neste runden, med doble antall jordrotter.
+    Du tapper når du får 20 prosent eller mindre.
+
 
 ## Installation
 
@@ -38,3 +42,8 @@ If you have UV installed then it will build a virtual enviroment and install pac
     Mohammad - maabdulr@uio.no
     Ryan - danierb@ifi.uio.no
     Thananthan - Thanantk@uio.no
+
+## Attributions
+    Sprites hand drawn by Oliver.
+    Music copyright free from https://youtu.be/mRN_T6JkH-c?si=Uja69b7xujRRH6tJ
+    

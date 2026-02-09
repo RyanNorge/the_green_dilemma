@@ -4,4 +4,4 @@
 Custom sprites and tiles made by ...
 https://github.com/osforcad
 
-Thanks Oscar!
+Thanks Oliver!
