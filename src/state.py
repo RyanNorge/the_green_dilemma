@@ -7,6 +7,7 @@ import node
 from grid import Grid
 from screen import Screen
 from jordrotte import Jordrotte
+from audio_manager import AudioManager
 
 GRID_WIDTH, GRID_HEIGHT = 22, 12
 
@@ -25,6 +26,8 @@ class State:
         self.last_grass_update = 0
         self.last_jordrotte_update = 0
         self.last_screen_update = 0
+
+        self.audio_manager = AudioManager()
 
     def next(self) -> None:
 
@@ -61,5 +64,6 @@ class State:
     def checkEating(self):
         if self.grid.cells[self.jordrotte.x][self.jordrotte.y].isAlive:
             self.grid.cells[self.jordrotte.x][self.jordrotte.y].changeAliveStatus(False)
+            self.audio_manager.play_eat_grass()
 
         # self.jordrotte.play_eat_grass()

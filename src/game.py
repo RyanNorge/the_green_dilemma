@@ -1,4 +1,3 @@
-from email.mime import audio
 import pygame
 import sys
 import time
@@ -24,6 +23,7 @@ def run():
     screen = pygame.display.set_mode((800, 600))
     audio_manager = AudioManager()
     audio_manager.play_background()
+    gameover = GameOver(screen, audio_manager)
 
     # Opprett Game Over
 
@@ -32,8 +32,13 @@ def run():
     Grid = state.grid
     Jordrotte = state.jordrotte
 
+    # go though a couple of generations to get the right pattern going
+    state.next()
+    state.next()
+
     # Game loop
     running = True
+    last_ending_check = time.time()
     while running:
         state.next()
 
@@ -54,19 +59,23 @@ def run():
                         print("Mouse clicked at ", tileX, tileY)
                         Grid.cells[tileX][tileY].fertilize()
 
-                    # Right click: move the jordrotte to clicked tile
-                    elif event.button == 3:
-                        state.jordrotte.move(tileX, tileY)
-                        print(f"Moved jordrotte to {tileX},{tileY}")
+                    # Right click to trap the jordrotte
+                    if event.button == 1:
+                        if tileX == Jordrotte.x and tileY == Jordrotte.y:
+                            print("Jordrotte fanget")
+                            Jordrotte.trap()
 
-    # Game over
-    gameover = GameOver(screen, audio)
+                        # Right click: move the jordrotte to clicked tile
+                        # state.jordrotte.move(tileX, tileY)
+                        # print(f"Moved jordrotte to {tileX},{tileY}")
+        # Game over
 
-    # Sjekke Game Over
-    result = gameover.check(grid)
-    if result:
-        pygame.time.delay(2000)
-        running = False
+        # Sjekke Game Over
+        now_time = time.time()
+        if now_time > last_ending_check + 2:
+            game_has_ended = gameover.check(Grid)
+            running = not game_has_ended
+            last_ending_check = now_time
 
     # Clean up
     pygame.quit()

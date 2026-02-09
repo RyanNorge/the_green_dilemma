@@ -1,5 +1,8 @@
 import pygame
+
 from audio_manager import AudioManager
+from grid import Grid
+from node import Node
 
 
 class GameOver:
@@ -13,27 +16,35 @@ class GameOver:
         self.font = pygame.font.SysFont(None, self.FONT_SIZE)
         self.finished = False
 
-    def check(self, grid):
-        total_cells = len(grid) * len(grid[0])
-        grass_cells = sum(1 for row in grid for node in row if node.isAlive)
+    def check(self, grid: Grid) -> bool:
+
+        total_cells = grid.height * grid.width
+
+        grass_cells = 0
+        for row in grid.cells:
+            for this_node in row:
+                this_node: Node
+                if this_node.isAlive:
+                    grass_cells += 1
 
         coverage = grass_cells / total_cells
+        # print(coverage)
 
-        if coverage >= 0.7 and not self.finished:
+        if coverage >= 0.85 and not self.finished:
             self.finished = True
             self.audio.stop_music()
             self.audio.play_win()
             self.display_message("YOU WIN", self.WIN_COLOR)
-            return "WIN"
+            return True
 
-        elif grass_cells == 0 and not self.finished:
+        if coverage <= 0.4 and not self.finished:
             self.finished = True
             self.audio.stop_music()
             self.audio.play_lose()
             self.display_message("YOU LOSE", self.LOSE_COLOR)
-            return "LOSE"
+            return True
 
-        return None
+        return False
 
     def display_message(self, text, color):
         overlay = pygame.Surface(self.screen.get_size())
@@ -46,3 +57,4 @@ class GameOver:
         self.screen.blit(rendered, rect)
 
         pygame.display.flip()
+        pygame.time.delay(3000)
