@@ -5,12 +5,17 @@ import random
 from gameover import GameOver
 
 
-import grid as Grid
-import node as Node
+from grid import Grid
 from audio_manager import AudioManager
 from jordrotte import Jordrotte
 from screen import Screen
 from state import State
+
+
+GRID_WIDTH, GRID_HEIGHT = 22, 12
+
+
+def create_new_state(oldstate: None | State = None): ...
 
 
 def run():
@@ -27,14 +32,14 @@ def run():
     # Opprett Game Over
 
     # Create game objects
-    state = State()
-    Grid = state.grid
-    Jordrotte = state.jordrotte
-    gameover = GameOver(screen, audio_manager)
+    # grid = Grid(GRID_WIDTH, GRID_HEIGHT)
+    screen = Screen(GRID_WIDTH, GRID_HEIGHT)
+
+    state = State(2, screen, audio_manager)
 
     # Game loop
     running = True
-    last_end_check = time.time()
+    last_ending_check = time.time()
     while running:
         state.next()
 
@@ -51,23 +56,25 @@ def run():
 
                 # Ensure click is inside the grid
                 if 0 <= tileX < state.grid.width and 0 <= tileY < state.grid.height:
-                    if event.button == 3:
-                        print("Mouse clicked at ", tileX, tileY)
-                        Grid.cells[tileX][tileY].fertilize()
+                    if event.button == 1:
+                        # print("Mouse clicked at ", tileX, tileY)
+                        state.grid.cells[tileX][tileY].fertilize()
 
-                    # Right click: move the jordrotte to clicked tile
-                    elif event.button == 3:
-                        state.jordrotte.move(tileX, tileY)
-                        print(f"Moved jordrotte to {tileX},{tileY}")
-
-        # pygame.time.delay(1000)
+                        for jord in state.mange_jordrotter:
+                            # click on the jordrotte to trap it
+                            if tileX == jord.x and tileY == jord.y:
+                                # print("Jordrotte fanget")
+                                jord.trap()
 
         # Sjekke Game Over
-        now_time = time.time()
-        if now_time > last_end_check + 2:
-            is_game_over = gameover.check(Grid)
-            running = not is_game_over
-            last_end_check = now_time
+        if time.time() > last_ending_check + 1:
+            game_over_state = state.gameover.check(state.grid)
+
+            if game_over_state == "win":
+                state = State(state.num_jordrotter * 2, screen, audio_manager)
+            elif game_over_state == "lose":
+                running = False
+            last_ending_check = time.time()
 
     # Clean up
     pygame.quit()

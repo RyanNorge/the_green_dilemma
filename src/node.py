@@ -11,12 +11,22 @@ HOLE = pygame.image.load("assets/TilthTile.png")
 START_GROW = pygame.image.load("assets/FertilizerTile.png")
 
 TRAMPLED_TILE = pygame.image.load("assets/TrampledTile.png")
+HOLE = pygame.image.load("assets/TilthTile.png")
+START_GROW = pygame.image.load("assets/FertilizerTile.png")
+
+TRAMPLED_TILE = pygame.image.load("assets/TrampledTile.png")
 UNSPROUTED_TILE = pygame.image.load("assets/UnsproutedTile.png")
+
+SEEDS_TILE = pygame.image.load("assets/PlacedDirtTile_PLACEHOLDER.png")
+SEEDS_TILE_2 = pygame.image.load("assets/Seeds2.png")
+SEEDS_TILE_3 = pygame.image.load("assets/Seeds3.png")
+
 
 GROWING_TILES = (DIRT_TILE, START_GROW, UNSPROUTED_TILE, GRASS_TILE)
 DYING_TILES = (GRASS_TILE, TRAMPLED_TILE, HOLE, DIRT_TILE)
 
-FERTILE_GROWING_TILES = (HOLE, START_GROW, UNSPROUTED_TILE, FLOWER_TILE)
+# FERTILE_GROWING_TILES = (SEEDS_TILE, START_GROW, UNSPROUTED_TILE, FLOWER_TILE)
+FERTILE_GROWING_TILES = (SEEDS_TILE, SEEDS_TILE_2, SEEDS_TILE_3, FLOWER_TILE)
 
 
 class Node:
@@ -49,6 +59,11 @@ class Node:
         self.sprite_frame = 99
 
     def checkNextUpdate(self):
+
+        if self.isFertilized:
+            self.nextAlive = True
+            return
+
         aliveNeighbors = 0
         for neighbor in [
             self.top,
@@ -64,36 +79,53 @@ class Node:
                 aliveNeighbors += 1
 
         if self.isAlive:
-            if aliveNeighbors == 2 or aliveNeighbors == 3:
+            if (
+                aliveNeighbors == 2
+                or aliveNeighbors == 3
+                or aliveNeighbors == 4
+                or aliveNeighbors == 5
+                or aliveNeighbors == 6
+            ):
                 self.nextAlive = True
             else:
                 self.nextAlive = False
 
         else:
-            if aliveNeighbors == 3:
+            if (
+                aliveNeighbors == 3
+                or aliveNeighbors == 4
+                or aliveNeighbors == 5
+                or aliveNeighbors == 6
+            ):
                 self.nextAlive = True
             else:
                 self.nextAlive = False
 
     def updateStatus(self):
-        if self.nextAlive:
+
+        # fertilizer keeps the grass alive
+        if self.isFertilized and self.fertilizerCountDown > 0 and self.isAlive:
             self.isAlive = True
-        else:
-            # fertilizer keeps the grass alive
-            if self.isFertilized and self.fertilizerCountDown > 0 and self.isAlive:
-                self.isAlive = True
-                self.fertilizerCountDown -= 1
-                if self.fertilizerCountDown <= 0:
-                    self.isFertilized = False
-                    self.fertilizerCountDown = 0
-            else:
-                self.isAlive = False
+            self.fertilizerCountDown -= 1
+            if self.fertilizerCountDown <= 0:
                 self.isFertilized = False
                 self.fertilizerCountDown = 0
+                return
+
+        if self.nextAlive:
+            self.isAlive = True
+            return
+
+        self.isAlive = False
+        self.isFertilized = False
+        self.fertilizerCountDown = 0
 
     def updateSprite(self):
 
         self.sprite_frame += 1
+
+        if self.isFertilized:
+            self.sprites_set = FERTILE_GROWING_TILES
 
         if self.isAlive and not self.wasAlive:
             self.sprites_set = GROWING_TILES
@@ -103,9 +135,16 @@ class Node:
             self.sprites_set = DYING_TILES
             self.sprite_frame = 0
 
+        if not self.isFertilized:
+            self.sprites_set = GROWING_TILES if self.isAlive else DYING_TILES
+
         self.wasAlive = self.isAlive
 
     def getSprite(self) -> pygame.Surface:
+
+        if self.isFertilized:
+            self.sprites_set = FERTILE_GROWING_TILES
+
         index = min(self.sprite_frame, len(self.sprites_set) - 1)
         return self.sprites_set[index]
 
@@ -113,8 +152,17 @@ class Node:
         self.isFertilized = True
         self.fertilizerCountDown = 5
 
+        if not self.isAlive:
+            self.sprite_frame = 0
 
-def build_grid(width, height):
+        self.isAlive = True
+        self.nextAlive = True
+
+        # change to fertilized sprites
+        self.sprites_set = FERTILE_GROWING_TILES
+
+
+def build_grid(width, height) -> list[list[Node]]:
 
     # Create nodes
     grid = []

@@ -1,4 +1,5 @@
 import pygame
+import random
 
 import audio_manager
 
@@ -14,12 +15,14 @@ class Sprite:
         self.sprites = [idle, eating]
         self._current_index = 0
 
-        sprite_width, sprite_height = idle.get_size()
-
+        # resize sprites
         for i, sprite in enumerate(self.sprites):
-            self.sprites[i] = pygame.transform.scale(
-                sprite, (sprite_width * 2, sprite_height * 2)
-            )
+            self.sprites[i] = self.resize_sprite(sprite)
+        self.trapped = self.resize_sprite(self.trapped)
+
+    def resize_sprite(self, sprite: pygame.Surface):
+        sprite_width, sprite_height = sprite.get_size()
+        return pygame.transform.scale(sprite, (sprite_width * 2, sprite_height * 2))
 
     def next(self) -> None:
         # loop index over list of sprites
@@ -33,11 +36,11 @@ class Sprite:
 
 
 class Jordrotte:
-    def __init__(self, screen: pygame.Surface):
+    def __init__(self, screen: pygame.Surface, grid_width: int, grid_height: int):
 
         # starting location
-        self.x = 5
-        self.y = 5
+        self.x = random.choice(range(grid_width - 1))
+        self.y = random.choice(range(grid_height - 1))
         self.speed = 5
         self.screen = screen
         self.sprite = Sprite()
@@ -45,6 +48,7 @@ class Jordrotte:
         self.isTrapped = 0
 
     def move(self, x, y):
+
         if self.isTrapped < 1:
             self.x = x
             self.y = y
@@ -70,4 +74,4 @@ class Jordrotte:
         audio_manager.AudioManager.play_eat_grass()
 
     def trap(self):
-        self.isTrapped = 6
+        self.isTrapped = 12
