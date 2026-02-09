@@ -50,8 +50,9 @@ def run():
                         Grid.cells[tileX][tileY].fertilize()
 
                     elif event.button == 1:
-                        print("Jordrotte fanget")
-                        Jordrotte.trap()
+                        if tileX == Jordrotte.x and tileY == Jordrotte.y:
+                            print("Jordrotte fanget")
+                            Jordrotte.trap()
 
     # Clean up
     pygame.quit()
